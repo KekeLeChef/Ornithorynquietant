@@ -110,7 +110,18 @@ def calc_power_temp(time, mois, sun_vector, x, y, z, phi, theta, constante_solai
             albedo_grid_mapped[i, j] = get_albedo(lat, lon, mois, list_albedo, latitudes, longitudes)
 
     coef_reflexion = albedo_grid_mapped
+
+    # Puissance solaire + albédo
     puissance_recue = constante_solaire * cos_theta_incidence * (1 - coef_reflexion)
+
+  # # #Ajout de l'effet de serre
+
+    # Température constante de l'atmosphère (pour l'instant)
+    T_atmo = 288 # Kelvin
+    puissance_effet_serre = (sigma*T_atmo** 4)/2
+
+    # Puissance totale reçue
+    puissance_recue += puissance_effet_serre
 
     temperature = (puissance_recue / sigma) ** 0.25
 
