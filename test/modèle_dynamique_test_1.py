@@ -65,15 +65,19 @@ z_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.cos(theta)
 # dans la boucle, le premier changement de température se fait à partir de l'état statique mais tous les autres aussi au lieu de faire avec la température calculée juste avant  ==> j'ai changé les résultats sont - infini
 
 
-S = 141646 * 10**6 #m^2
+# S = 141646 * 10**6 #m^2
+S_terre = 510 * 10**12 # m^2
 Cpm = 1000  #J*kg**-1*K**-1   # au pif là
 mu_sol_sec = 1000 #kg*m**-3
 epaisseur = 5*10**-2 #m
+# Cpm = 4180 #J*kg**-1*K**-1 pour l'eau
 
-Cp = Cpm*mu_sol_sec*epaisseur*(S/1711)
+Cp = Cpm*mu_sol_sec*epaisseur*(S_terre/1711)
+print("Cp", Cp)
+
 
 def change_temp (Ti, Cp, Pr, dt) :
-    T = ((-sigma*(Ti**4)+Pr)*S*dt)/Cp + Ti
+    T = ((-sigma*(Ti**4)+Pr)*S_terre/1711*dt)/Cp + Ti
     return T
 
 sun_vector = np.array([1, 0, 0])
@@ -89,34 +93,35 @@ P, T = calc_power_temp(0, 1, sun_vector, x, y, z, phi, theta, constante_solaire,
 t_apres_chgmt.append(T[10,5])
 
 print("Cp = ", Cp)
-for i in range(1,25):
-    P, T = calc_power_temp(i, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
-    # temp_24h_point_au_pif.append(T[10, 5])
-    # puissance_recue_24h.append(P[10, 5])
-    print("Ti =", t_apres_chgmt[i-1])
-    print("Pr = ",P[10,5])
-    Tchange = change_temp(t_apres_chgmt[i-1],Cp,P[10,5],3600)
-    t_apres_chgmt.append(Tchange)
+# for i in range(1,25):
+#     P, T = calc_power_temp(i, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
+#     # temp_24h_point_au_pif.append(T[10, 5])
+#     # puissance_recue_24h.append(P[10, 5])
+#     # print("Ti =", t_apres_chgmt[i-1])
+#     # print("Pr = ",P[10,5])
+#     Tchange = change_temp(t_apres_chgmt[-1],Cp,P[10,5],3600)
+#     t_apres_chgmt.append(Tchange)
 
-print(t_apres_chgmt)
-#
-# P, T = calc_power_temp(0, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
-# Ti = T[10,5]
-# Pr = P[10,5]
-# T2 = change_temp(Ti, Cp, Pr, 3600)
-#
-# P, T = calc_power_temp(0, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
-# T2bis = T[10,5]
-#
-# print(T2)
-# print(T2bis)
+# print(t_apres_chgmt)
 
-## changement temp ridicule (-1,9e-14)
+for k in range(1,31) :
+    for i in range(1,25):
+        P, T = calc_power_temp(i, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
+        # temp_24h_point_au_pif.append(T[10, 5])
+        # puissance_recue_24h.append(P[10, 5])
+        # print("Ti =", t_apres_chgmt[i-1])
+        # print("Pr = ",P[10,5])
+        Tchange = change_temp(t_apres_chgmt[-1],Cp,P[10,5],3600)
+        t_apres_chgmt.append(Tchange)
 
-# temp = []
-# for i in T :
-#     temp.append (i[0])
-# print(temp)
+for i in range(1,25) :
+    print("1e jour",t_apres_chgmt[i])
+
+for i in range(1,25) :
+    print("31 jour",t_apres_chgmt[-i])
+
+
+
 
 
 ## Fin test
