@@ -29,7 +29,7 @@ N_bar   = 51        # impair
 D       = 1.4e-4     # m²/s attention: change énormément résultats
 T_left  = 10000.0      # °C
 T_right = 0.0        # °C
-t_final = 5000.0    # s
+t_final = 10000.0    # s
 
 # Maillage
 dx      = L_bar / (N_bar - 1)
