@@ -11,9 +11,9 @@ N_left = 51           # Nombre de points dans le matériau gauche (doit être im
 dx = L_left / (N_left - 1)
 x_left = np.linspace(0, L_left, N_left)
 
-alpha1 = 5e-4         # Diffusivité thermique du matériau gauche (m^2/s)
+alpha1 = 1e-4         # Diffusivité thermique du matériau gauche (m^2/s)
 T1_initial = 100.0    # Température initiale uniforme du matériau gauche (°C)
-T2_fixed = 220.0       # Température constante du matériau droit (°C)
+T2_fixed = 0.0       # Température constante du matériau droit (°C)
 
 
 
