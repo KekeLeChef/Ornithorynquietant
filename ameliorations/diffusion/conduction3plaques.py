@@ -28,10 +28,10 @@ Sorties :
 L_seg   = 10        # m
 N_seg   = 51          # impair
 D       = 1e-4       # m²/s
-T_left  = 5000.0       # °C
-T_main  =  1000.0       # °C
+T_left  = 100.0       # °C
+T_main  = 70.0       # °C
 T_right = 0.0       # °C
-t_final = 10000000.0     # s
+t_final = 6000000.0     # s
 
 # Maillage
 dx      = L_seg / (N_seg - 1)
