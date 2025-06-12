@@ -27,7 +27,7 @@ Sorties :
 L_bar   = 0.5        # m
 N_bar   = 51        # impair
 D       = 1.4e-4     # m²/s attention: change énormément résultats
-T_left  = 10000.0      # °C
+T_left  = 100.0      # °C
 T_right = 0.0        # °C
 t_final = 10000.0    # s
 
