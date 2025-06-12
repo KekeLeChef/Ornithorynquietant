@@ -11,15 +11,15 @@ N_left = 51           # Nombre de points dans le matériau gauche (doit être im
 dx = L_left / (N_left - 1)
 x_left = np.linspace(0, L_left, N_left)
 
-alpha1 = 5e-4         # Diffusivité thermique du matériau gauche (m^2/s)
+D = 1e-4         # Diffusivité thermique du matériau gauche (m^2/s)
 T1_initial = 100.0    # Température initiale uniforme du matériau gauche (°C)
-T2_fixed = 220.0       # Température constante du matériau droit (°C)
+T2_fixed = 0.0       # Température constante du matériau droit (°C)
 
 
 
 # Pas de temps respectant la condition de stabilité explicite
-dt = 0.25 * dx**2 / alpha1
-t_final = 20000.0
+dt = 0.25 * dx**2 / D
+t_final = 10000.0
 n_steps = int(np.ceil(t_final / dt))
 
 # On identifie l'indice du point milieu dans le matériau gauche
@@ -49,7 +49,7 @@ for n in range(1, n_steps+1):
             T_right = T2_fixed
         else:
             T_right = T_old[i + 1]
-        T_new[i] = T_old[i] + dt * alpha1 * (T_right - 2*T_old[i] + T_old[i-1]) / dx**2
+        T_new[i] = T_old[i] + dt * D * (T_right - 2*T_old[i] + T_old[i-1]) / dx**2
 
     # Condition isolée à gauche (flux nul): T_new[0] = T_new[1]
     T_new[0] = T_new[1]
