@@ -59,66 +59,63 @@ y_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.sin(theta) * np.sin
 z_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.cos(theta)
 
 
-## Test (à quoi correspond, à finir)
-## Problèmes
-# Cp n'est pas censée être massique donc utilise masse volumique et volume ici
-# dans la boucle, le premier changement de température se fait à partir de l'état statique mais tous les autres aussi au lieu de faire avec la température calculée juste avant  ==> j'ai changé les résultats sont - infini
+## Test
 
+sun_vector = np.array([1, 0, 0])
 
-# S = 141646 * 10**6 #m^2
 S_terre = 510 * 10**12 # m^2
-Cpm = 1000  #J*kg**-1*K**-1   # au pif là
+# Capacité thermique massique du sol
+Cpm = 1000  #J*kg**-1*K**-1
 mu_sol_sec = 1000 #kg*m**-3
 epaisseur = 5*10**-2 #m
 # Cpm = 4180 #J*kg**-1*K**-1 pour l'eau
 
+# Capacité thermique d'un carré
 Cp = Cpm*mu_sol_sec*epaisseur*(S_terre/1711)
-print("Cp", Cp)
+# print("Cp = ", Cp)
 
-
+# Fonction calculant T1 en fonction de T0
 def change_temp (Ti, Cp, Pr, dt) :
     T = ((-sigma*(Ti**4)+Pr)*S_terre/1711*dt)/Cp + Ti
     return T
 
-sun_vector = np.array([1, 0, 0])
-
-# boucle
 
 temp_24h_point_au_pif = []
 puissance_recue_24h =[]
+
+# Nouvelles températures (pas statiques)
 t_apres_chgmt = []
 
 # première température prise en statique
 P, T = calc_power_temp(0, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
 t_apres_chgmt.append(T[10,5])
 
-print("Cp = ", Cp)
-# for i in range(1,25):
-#     P, T = calc_power_temp(i, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
-#     # temp_24h_point_au_pif.append(T[10, 5])
-#     # puissance_recue_24h.append(P[10, 5])
-#     # print("Ti =", t_apres_chgmt[i-1])
-#     # print("Pr = ",P[10,5])
-#     Tchange = change_temp(t_apres_chgmt[-1],Cp,P[10,5],3600)
-#     t_apres_chgmt.append(Tchange)
+for i in range(1,25):
+    P, T = calc_power_temp(i, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
+    # temp_24h_point_au_pif.append(T[10, 5])
+    # puissance_recue_24h.append(P[10, 5])
+    # print("Ti =", t_apres_chgmt[i-1])
+    # print("Pr = ",P[10,5])
+    Tchange = change_temp(t_apres_chgmt[-1],Cp,P[10,5],3600)
+    t_apres_chgmt.append(Tchange)
 
-# print(t_apres_chgmt)
+print(t_apres_chgmt)
 
-for k in range(1,31) :
-    for i in range(1,25):
-        P, T = calc_power_temp(i, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
-        # temp_24h_point_au_pif.append(T[10, 5])
-        # puissance_recue_24h.append(P[10, 5])
-        # print("Ti =", t_apres_chgmt[i-1])
-        # print("Pr = ",P[10,5])
-        Tchange = change_temp(t_apres_chgmt[-1],Cp,P[10,5],3600)
-        t_apres_chgmt.append(Tchange)
-
-for i in range(1,25) :
-    print("1e jour",t_apres_chgmt[i])
-
-for i in range(1,25) :
-    print("31 jour",t_apres_chgmt[-i])
+# for k in range(1,31) :
+#     for i in range(1,25):
+#         P, T = calc_power_temp(i, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
+#         # temp_24h_point_au_pif.append(T[10, 5])
+#         # puissance_recue_24h.append(P[10, 5])
+#         # print("Ti =", t_apres_chgmt[i-1])
+#         # print("Pr = ",P[10,5])
+#         Tchange = change_temp(t_apres_chgmt[-1],Cp,P[10,5],3600)
+#         t_apres_chgmt.append(Tchange)
+#
+# for i in range(1,25) :
+#     print("1e jour",t_apres_chgmt[i])
+#
+# for i in range(1,25) :
+#     print("31 jour",t_apres_chgmt[-i])
 
 
 
