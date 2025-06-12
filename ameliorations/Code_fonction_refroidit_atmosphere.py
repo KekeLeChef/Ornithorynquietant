@@ -12,6 +12,9 @@ def change_temp_jour(Ti, Pa, Cp, Ps, dt):
     return dT
 
 
+def change_temp (Ti, Cp, Pr, dt) :
+    T = ((-sigma*(Ti**4)+Pr)*S*dt)/Cp + Ti
+    return T
 
 
 
