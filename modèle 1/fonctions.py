@@ -118,7 +118,7 @@ def calc_power_temp(time, mois, sun_vector, x, y, z, phi, theta, constante_solai
 
     # Température constante de l'atmosphère (pour l'instant)
     T_atmo = 288 # Kelvin
-    puissance_effet_serre = (sigma*T_atmo** 4)/2
+    puissance_effet_serre = (sigma*T_atmo** 4)
 
     # Puissance totale reçue
     puissance_recue += puissance_effet_serre
