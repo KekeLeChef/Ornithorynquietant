@@ -1,2 +1,2 @@
-Se trouvent dans ce dossiers les modèles python ressençant l'évolution de la température terrestre par conduction au cours du temps.
+Se trouvent dans ce dossiers les modèles python recensant l'évolution de la température terrestre par conduction au cours du temps.
 Les fichiers "conduction2plaques" "conduction3plaques" modélisent la diffusion selon 1 dimension, entre respectivement 2 et 3 plaques. Contrairement au fichier "conduction2plaquesfixe" dont les conditions limites de température aux bords de la plaque ne varient pas; les deux premiers fichiers voient, eux leurs conditions limite évoluer au cours du temps.
