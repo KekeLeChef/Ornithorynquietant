@@ -25,13 +25,13 @@ Sorties :
 """
 
 # Paramètres
-L_seg   = 10        # m
+L_seg   = 0.1        # m
 N_seg   = 51          # impair
 D       = 1e-4       # m²/s
-T_left  = 100.0       # °C
-T_main  = 70.0       # °C
-T_right = 0.0       # °C
-t_final = 6000000.0     # s
+T_left  = 50.0       # °C
+T_main  =  0.0       # °C
+T_right = 50.0       # °C
+t_final = 1000.0     # s
 
 # Maillage
 dx      = L_seg / (N_seg - 1)
