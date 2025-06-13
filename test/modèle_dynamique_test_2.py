@@ -7,6 +7,7 @@ from matplotlib.widgets import Slider, Button
 import shapefile
 import pandas as pd
 from fonctions import update_sun_vector, project_to_sphere, get_shape, get_albedo, calc_power_temp, update_plot, slider_update, set_mois
+import csv
 
 
 # Charger les données SHP
@@ -59,7 +60,7 @@ y_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.sin(theta) * np.sin
 z_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.cos(theta)
 
 
-## Test
+## Test temp sur 24H
 
 sun_vector = np.array([1, 0, 0])
 
@@ -86,20 +87,37 @@ puissance_recue_24h =[]
 # Nouvelles températures (pas statiques)
 t_apres_chgmt = []
 
+# Dimension matrice de température
+L = 1800  # nombre de points
+l = 24    # nombre de colonnes (heures)
+
+# Initialisation de la matrice de température
+temperature_matrix = np.zeros((L, l))
+
 # première température prise en statique
-P, T = calc_power_temp(0, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
-t_apres_chgmt.append(T[10,5])
+P0, T0 = calc_power_temp(0, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
+# t_apres_chgmt.append(T[10,5])
 
-for i in range(1,25):
+for i in range(1,2):
     P, T = calc_power_temp(i, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
-    # temp_24h_point_au_pif.append(T[10, 5])
-    # puissance_recue_24h.append(P[10, 5])
-    # print("Ti =", t_apres_chgmt[i-1])
-    # print("Pr = ",P[10,5])
-    Tchange = change_temp(t_apres_chgmt[-1],Cp,P[10,5],3600)
-    t_apres_chgmt.append(Tchange)
+    #mettre les T dans la colonne i (fichier csv : ligne les heures, colonne les 1800 points)
 
-print(t_apres_chgmt)
+    # Aplatir la matrice T (par lignes)
+    T_flat = T.flatten()  # devient un tableau 1D de 1800 valeurs
+    print(T_flat)
+
+    # Mettre la colonne i-1 à jour avec les 1800 températures
+    temperature_matrix[:, i - 1] = T_flat
+
+    #
+    # Tchange = change_temp(t_apres_chgmt[-1],Cp,P[10,5],3600)
+    # t_apres_chgmt.append(Tchange)
+
+
+# Sauvegarde dans un fichier CSV
+# np.savetxt("temperature_output2.csv", temperature_matrix, delimiter=",")
+
+# print(t_apres_chgmt)
 
 # for k in range(1,31) :
 #     for i in range(1,25):
@@ -117,38 +135,10 @@ print(t_apres_chgmt)
 # for i in range(1,25) :
 #     print("31 jour",t_apres_chgmt[-i])
 
+## Création fichiers
 
 
 
 
-## Fin test
 
-#
-#
-# # Création de la figure et de l'axe
-# fig = plt.figure(figsize=(10, 7))
-# ax = fig.add_subplot(111, projection='3d')
-#
-# # Initialisation du graphique
-# current_month = [3]
-# update_plot(0, current_month[0], ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes)
-#
-# # Création du slider
-# ax_slider = plt.axes([0.25, 0.02, 0.50, 0.03], facecolor='lightgoldenrodyellow')
-# time_slider = Slider(ax_slider, 'Time (h)', 0, 48, valinit=0, valstep=1)
-#
-# # Liaison du slider à la fonction de mise à jour
-# time_slider.on_changed(lambda val: slider_update(val, current_month, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes))
-#
-# # Création des axes et boutons pour chaque mois
-# mois_labels = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
-# btn_mois = []
-#
-# for i, mois in enumerate(mois_labels):
-#     ax_mois = plt.axes([0.1, 0.95 - i * 0.07, 0.1, 0.04])
-#     btn = Button(ax_mois, mois)
-#     btn.on_clicked(lambda event, m=i + 1: set_mois(m, current_month, time_slider, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes))
-#     btn_mois.append(btn)
-#
-# # Affichage de la figure
-# plt.show()
+
