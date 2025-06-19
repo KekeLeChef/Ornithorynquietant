@@ -60,8 +60,8 @@ x_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.sin(theta) * np.cos
 y_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.sin(theta) * np.sin(phi)
 z_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.cos(theta)
 
-#
-# ## Test températures sur 24H et stockage desdonnées dans un fichier csv pour les 1800 points
+
+## Test températures sur 24H et stockage desdonnées dans un fichier csv pour les 1800 points
 #
 # sun_vector = np.array([1, 0, 0])
 #
@@ -97,15 +97,30 @@ z_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.cos(theta)
 #
 # # première température prise en statique
 # P0, T0 = calc_power_temp(0, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
+# T0_flat = T0.flatten()
 # # t_apres_chgmt.append(T[10,5])
 #
-# for i in range(1,2):
+# for i in range(1,25):
+#
 #     P, T = calc_power_temp(i, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
-#     #mettre les T dans la colonne i (fichier csv : ligne les heures, colonne les 1800 points)
 #
 #     # Aplatir la matrice T (par lignes)
 #     T_flat = T.flatten()  # devient un tableau 1D de 1800 valeurs
-#     print(T_flat)
+#     P_flat = P.flatten()
+#     # print(T_flat)
+#     # print(type(T_flat))
+#
+#     if i  == 1 :
+#
+#         # k c'est l'indice et j c'est l'élément
+#         for k,j in enumerate(T_flat) :
+#             T_flat[k] = change_temp(T0_flat[k],Cp,P_flat[k],3600)
+#
+#     else :
+#
+#         for k,j in enumerate(T_flat) :
+#             T_flat[k] = change_temp(temperature_matrix[:,i-2][k],Cp,P_flat[k],3600)
+#
 #
 #     # Mettre la colonne i-1 à jour avec les 1800 températures
 #     temperature_matrix[:, i - 1] = T_flat
@@ -116,7 +131,7 @@ z_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.cos(theta)
 #
 #
 # # Sauvegarde dans un fichier CSV
-# np.savetxt("temperature_output2.csv", temperature_matrix, delimiter=",")
+# np.savetxt("temperature_bon3_Tatmo_288.csv", temperature_matrix, delimiter=",")
 
 
 ## Lecture csv et stockage des infos dans une matrice
@@ -124,7 +139,7 @@ z_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.cos(theta)
 T_sur_24h = []
 rows, cols = 30, 60
 # Lecture du CSV complet
-data = np.loadtxt("temperature_output.csv", delimiter=",")
+data = np.loadtxt("temperature_bon3_Tatmo_288.csv", delimiter=",")
 
 # Extraction de la colonne voulue (1800 valeurs)
 col_data = data[:, 0]  # shape = (1800,)
