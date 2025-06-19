@@ -181,3 +181,7 @@ def get_Cp(x, y, z, phi, theta, list_Cp , latitudes, longitudes):
 
     return Cp_grip_mapped
 
+
+def change_temp (Ti, Cp, Pr, dt) :
+    T = ((-sigma*(Ti**4)+Pr)*S_terre/1800*dt)/Cp + Ti
+    return T
