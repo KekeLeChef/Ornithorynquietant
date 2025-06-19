@@ -189,3 +189,4 @@ def set_mois(mois, current_month, time_slider, ax, fig, shapes, x, y, z, constan
     """
     current_month[0] = mois
     slider_update(time_slider.val, current_month, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes)
+
