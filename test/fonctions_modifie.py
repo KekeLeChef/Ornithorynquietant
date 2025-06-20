@@ -2,6 +2,7 @@ import numpy as np
 import shapefile
 import matplotlib.pyplot as plt
 from matplotlib import cm
+from scipy.spatial import cKDTree
 
 def update_sun_vector(mois, sun_vector):
     """
@@ -66,6 +67,30 @@ def get_albedo(lat, lon, mois, list_albedo, latitudes, longitudes):
     lat_idx = (np.abs(latitudes - lat)).argmin()
     lon_idx = (np.abs(longitudes - lon)).argmin()
     return list_albedo[mois-1][lat_idx, lon_idx]
+
+
+
+def get_Cp(lat, lon, list_albedo):
+    """
+    Retourne la capacité thermique du point du DataFrame le plus proche de la latitude et longitude données.
+
+    Args:
+        lat (float): Latitude recherchée.
+        lon (float): Longitude recherchée.
+        list_albedo (pd.DataFrame): DataFrame avec colonnes 'latitude', 'longitude', 'heat_capacity'.
+
+    Returns:
+        float: La capacité thermique du point le plus proche.
+    """
+    # Calcul de la distance euclidienne
+    distances = np.sqrt((list_albedo['latitude'] - lat)**2 + (list_albedo['longitude'] - lon)**2)
+    closest_index = distances.idxmin()
+    closest_row = list_albedo.loc[closest_index]
+
+    return closest_row['heat_capacity']
+
+
+
 
 def calc_power_temp(time, mois, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes):
     """
