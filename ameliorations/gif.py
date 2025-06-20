@@ -1,5 +1,5 @@
 from PIL import Image
-
+import os
 def creer_gif(images, chemin_sortie, duree=500, boucle=0):
     """
     Crée un GIF à partir d'une liste d'images.
@@ -27,3 +27,12 @@ def creer_gif(images, chemin_sortie, duree=500, boucle=0):
     )
 
     print(f"GIF créé avec succès : {chemin_sortie}")
+
+dossier = "Evolution_sur_24h"
+images=sorted([
+    os.path.join(dossier,f)
+    for f in os.listdir(dossier)
+    if f.endswith(('.png'))])
+
+creer_gif(images,"gif.gif")
+
