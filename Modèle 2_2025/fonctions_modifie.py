@@ -39,6 +39,23 @@ def project_to_sphere(lon, lat, radius=1):
     z = radius * np.sin(lat)
     return x, y, z
 
+def project_to_geographic(x, y, z):
+    """
+    Prend en entrée les coordonnées cartésiennes (x, y, z)
+    Renvoie la longitude et la latitude en degrés, ainsi que le rayon
+    """
+
+    radius = np.sqrt(x**2 + y**2 + z**2)
+
+    lat = np.arcsin(z / radius)
+    lon = np.arctan2(y, x)
+
+    lat_deg = np.degrees(lat)
+    lon_deg = np.degrees(lon)
+
+    return lon_deg, lat_deg, radius
+
+
 def get_shape(shape):
     """
     Extrait et projette les points d'une forme géographique sur une sphère.
