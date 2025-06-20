@@ -25,11 +25,13 @@ for i in range(1, 13):
     albedo_grid = albedo_data.set_index('Latitude/Longitude').to_numpy()
     list_albedo.append(albedo_grid)
 
-# Charger les capacités thermiques
-capacity_data = pd.read_csv("1800_Capacity_5cm.csv")
-capacity_parsed = capacity_data.iloc[:, 0].str.split(';', expand=True)
-capacity_parsed.columns = ['latitude', 'longitude', 'heat_capacity']
-capacity_parsed = capacity_parsed.astype(float)
+# Charger et parser le fichier de capacité thermique
+capacity_data = pd.read_csv("grid_1800_cp.csv")
+capacity_parsed = capacity_data
+capacity_parsed.columns = ['latitude', 'longitude', 'cp_J_per_K']
+capacity_parsed['latitude'] = capacity_parsed['latitude'].astype(float)
+capacity_parsed['longitude'] = capacity_parsed['longitude'].astype(float)
+capacity_parsed['cp_J_per_K'] = capacity_parsed['cp_J_per_K'].astype(float)
 
 # Constantes
 constante_solaire = 1361
