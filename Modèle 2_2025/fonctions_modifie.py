@@ -53,7 +53,7 @@ def project_to_geographic(x, y, z):
     lat_deg = np.degrees(lat)
     lon_deg = np.degrees(lon)
 
-    return lon_deg, lat_deg, radius
+    return lon_deg, lat_deg
 
 
 def get_shape(shape):
