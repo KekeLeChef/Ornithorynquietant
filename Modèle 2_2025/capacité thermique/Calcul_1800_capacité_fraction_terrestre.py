@@ -14,9 +14,9 @@ D_SOIL = 1600
 D_ICE = 917
 
 # Profondeurs moyennes considérées (en mètres)
-DEPTH_WATER = 10
-DEPTH_SOIL = 1
-DEPTH_ICE = 2
+DEPTH_WATER = 0.05
+DEPTH_SOIL = 0.05
+DEPTH_ICE = 0.05
 
 # Aire d'une cellule (283 333 km² en m²)
 CELL_AREA_KM2 = 283333
