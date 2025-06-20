@@ -70,22 +70,22 @@ def get_albedo(lat, lon, mois, list_albedo, latitudes, longitudes):
 
 
 
-def get_Cp(lat, lon, list_albedo):
+def get_Cp(lat, lon, list_Cp):
     """
     Retourne la capacité thermique du point du DataFrame le plus proche de la latitude et longitude données.
 
     Args:
         lat (float): Latitude recherchée.
         lon (float): Longitude recherchée.
-        list_albedo (pd.DataFrame): DataFrame avec colonnes 'latitude', 'longitude', 'heat_capacity'.
+        list_Cp (pd.DataFrame): DataFrame avec colonnes 'latitude', 'longitude', 'heat_capacity'.
 
     Returns:
         float: La capacité thermique du point le plus proche.
     """
     # Calcul de la distance euclidienne
-    distances = np.sqrt((list_albedo['latitude'] - lat)**2 + (list_albedo['longitude'] - lon)**2)
+    distances = np.sqrt((list_Cp['latitude'] - lat)**2 + (list_Cp['longitude'] - lon)**2)
     closest_index = distances.idxmin()
-    closest_row = list_albedo.loc[closest_index]
+    closest_row = list_Cp.loc[closest_index]
 
     return closest_row['heat_capacity']
 
