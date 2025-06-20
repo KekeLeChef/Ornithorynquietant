@@ -104,7 +104,7 @@ y_flat = y.flatten()
 z_flat = z.flatten()
 
 #pour le mois de janvier
-for i in range (1,601) :
+for i in range (1,201) :
 
     P, T = calc_power_temp(i, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
 

@@ -38,21 +38,27 @@ def project_to_sphere(lon, lat, radius=1):
     z = radius * np.sin(lat)
     return x, y, z
 
+import numpy as np
+
 def project_to_geographic(x, y, z):
     """
-    Prend en entrée les coordonnées cartésiennes (x, y, z)
-    Renvoie la longitude et la latitude en degrés, ainsi que le rayon
+    Convertit des coordonnées cartésiennes (x, y, z) en coordonnées géographiques (longitude, latitude) en degrés.
+    Renvoie : (longitude, latitude, rayon)
     """
-
     radius = np.sqrt(x**2 + y**2 + z**2)
 
+    # Empêcher une division par zéro
+    if radius == 0:
+        return np.nan, np.nan, 0
+
     lat = np.arcsin(z / radius)
-    lon = np.arctan2(y, x)
+    lon = np.arctan2(y, x)  # Corrige ici l'erreur
 
     lat_deg = np.degrees(lat)
     lon_deg = np.degrees(lon)
 
     return lon_deg, lat_deg
+
 
 def get_shape(shape):
     """
@@ -84,27 +90,22 @@ def get_albedo(lat, lon, mois, list_albedo, latitudes, longitudes):
     return list_albedo[mois-1][lat_idx, lon_idx]
 
 
-def get_Cp(x,y,z, list_albedo):
-    """
-    Retourne la capacité thermique du point du DataFrame le plus proche de la latitude et longitude données.
+def get_Cp(x, y, z, capacity_parsed, k=5):
+    lon, lat= project_to_geographic(x, y, z)
 
-    Args:
-        lat (float): Latitude recherchée.
-        lon (float): Longitude recherchée.
-        list_albedo (pd.DataFrame): DataFrame avec colonnes 'latitude', 'longitude', 'cp_J_per_K'.
+    if np.isnan(lon) or np.isnan(lat):
+        return 0
 
-    Returns:
-        float: La capacité thermique du point le plus proche.
-    """
+    distances = ((capacity_parsed['latitude'] - lat)**2 + (capacity_parsed['longitude'] - lon)**2)
 
-    lon, lat = project_to_geographic(x, y, z)
+    if distances.isna().all():
+        return 0
 
-    # Calcul de la distance euclidienne
-    distances = np.sqrt((list_albedo['latitude'] - lat)**2 + (list_albedo['longitude'] - lon)**2)
-    closest_index = distances.idxmin()
-    closest_row = list_albedo.loc[closest_index]
+    closest_indices = distances.nsmallest(k).index
+    mean_cp = capacity_parsed.loc[closest_indices]['cp_J_per_K'].mean()
+    return mean_cp
 
-    return closest_row['cp_J_per_K']
+
 
 def calc_power_temp(time, mois, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes):
     """
