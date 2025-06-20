@@ -45,7 +45,7 @@ for i, lat in enumerate(latitudes):
         if dist < 5:  # tolérance de distance en degrés (ajustable)
             capacity_grid[i, j] = capacity_values[idx]
         else:
-            capacity_grid[i, j] = "nan"
+            capacity_grid[i, j] = None
 
 # Stockage dans la liste comme pour l'albédo
 list_capacity = [capacity_grid]
@@ -56,7 +56,7 @@ print(capacity_grid)
 var=None
 for i in range(len(capacity_grid)):
     for j in range(len(capacity_grid[0])):
-        if capacity_grid[i][j]=='nan':
+        if capacity_grid[i][j]=="nan":
             var=True
 
 

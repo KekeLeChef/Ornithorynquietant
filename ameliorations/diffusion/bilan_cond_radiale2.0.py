@@ -45,7 +45,7 @@ def compute_surf_flux(T_surf,
         T[0]   = T_lim
         T[-1]  = T_surf
         # calcul du flux ("surf")
-        flux_surf[n] = -k * (T[1] - T[0]) / dx * A
+        flux_surf[n] = -k * (T[1] - T[0]) / dx * A #loi de Newton
 
     # énergie reçue par unité de surface (J/m²)
     E_surf = np.trapz(flux_surf, times)

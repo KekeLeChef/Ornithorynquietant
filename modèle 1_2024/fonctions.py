@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 def update_sun_vector(mois, sun_vector):
     """
     Met à jour le vecteur solaire en fonction du mois pour tenir compte de l'inclinaison saisonnière de l'axe de la Terre.
-    
+
     Paramètres:
     mois (int): Le mois de l'année (1 pour janvier, 12 pour décembre).
-    
+
     Retours:
     numpy.ndarray: Le vecteur solaire mis à jour après application de la rotation saisonnière.
 
@@ -129,7 +129,7 @@ def calc_power_temp(time, mois, sun_vector, x, y, z, phi, theta, constante_solai
 
 def update_plot(time, mois, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes):
     """
-    Fonction prend en entrée l'heure de la journée et le mois (par défaut, Mars : sera modifié quand on clique sur les boutons à gauche de la modélisation), l'axe, la figure, shapes, les coordonnées (x,y,z), les constantes :sigma, phi, theta, rayon_astre_m, la liste d'albedo, la latitude et la longitude 
+    Fonction prend en entrée l'heure de la journée et le mois (par défaut, Mars : sera modifié quand on clique sur les boutons à gauche de la modélisation), l'axe, la figure, shapes, les coordonnées (x,y,z), les constantes :sigma, phi, theta, rayon_astre_m, la liste d'albedo, la latitude et la longitude
     Elle calcule la puissance emise par la terre avec la fonction calc_power_temp puis effet_de_serre. Puis elle met à jour le modèle : les lignes de côte sont tracées, puis la surface de la sphère est représentée en utilisant les valeurs de puissance calculées, avec des couleurs déterminées par une colormap (viridis).
     """
     sun_vector = np.array([1, 0, 0])
@@ -152,7 +152,7 @@ def update_plot(time, mois, ax, fig, shapes, x, y, z, constante_solaire, sigma, 
 
 def slider_update(val, current_month, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes):
     """
-    Prend en entrée l'heure de la journée, le mois, l'axe, la figure, shapes, les coordonnées (x,y,z), les constantes :sigma, phi, theta, rayon_astre_m, la liste d'albedo, la latitude et la longitude  
+    Prend en entrée l'heure de la journée, le mois, l'axe, la figure, shapes, les coordonnées (x,y,z), les constantes :sigma, phi, theta, rayon_astre_m, la liste d'albedo, la latitude et la longitude
     Fonction qui update le modèle lorsque l'on fait varier la valeur de temps.
     """
     update_plot(val, current_month[0], ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes)
@@ -164,3 +164,24 @@ def set_mois(mois, current_month, time_slider, ax, fig, shapes, x, y, z, constan
     """
     current_month[0] = mois
     slider_update(time_slider.val, current_month, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes)
+
+
+
+def get_Cp(x, y, z, phi, theta, list_Cp , latitudes, longitudes):
+
+    Cp_grid_mapped = np.zeros_like(x)
+    for i in range(x.shape[0]):
+        for j in range(x.shape[1]):
+            lon, lat = np.degrees(phi[i, j]), 90 - np.degrees(theta[i, j])
+            if lon > 180:
+                lon -= 360
+            lat_idx = (np.abs(latitudes - lat)).argmin()
+            lon_idx = (np.abs(longitudes - lon)).argmin()
+            Cp_grid_mapped[i, j] = [lat_idx,lon_idx]
+
+    return Cp_grip_mapped
+
+
+def change_temp (Ti, Cp, Pr, dt) :
+    T = ((-sigma*(Ti**4)+Pr)*S_terre/1800*dt)/Cp + Ti
+    return T
