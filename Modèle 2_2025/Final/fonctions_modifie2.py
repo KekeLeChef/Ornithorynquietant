@@ -91,7 +91,7 @@ def get_Cp(x,y,z, list_albedo):
     Args:
         lat (float): Latitude recherchée.
         lon (float): Longitude recherchée.
-        list_albedo (pd.DataFrame): DataFrame avec colonnes 'latitude', 'longitude', 'heat_capacity'.
+        list_albedo (pd.DataFrame): DataFrame avec colonnes 'latitude', 'longitude', 'cp_J_per_K'.
 
     Returns:
         float: La capacité thermique du point le plus proche.
@@ -104,7 +104,7 @@ def get_Cp(x,y,z, list_albedo):
     closest_index = distances.idxmin()
     closest_row = list_albedo.loc[closest_index]
 
-    return closest_row['heat_capacity']
+    return closest_row['cp_J_per_K']
 
 def calc_power_temp(time, mois, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes):
     """
