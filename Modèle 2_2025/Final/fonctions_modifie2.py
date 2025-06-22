@@ -246,7 +246,7 @@ def set_mois(mois, current_month, time_slider, ax, fig, shapes, x, y, z, constan
 
 
 
-# Prise en compte de la diffusion orthoradiale
+# Prise en compte de la diffusion radiale
 def puissance_cond(T_surf,temps,lat,long):
     """
     Calcule la puissance surfacique moyenne reçue à la surface pendant un temps choisie (normalement 1h),
