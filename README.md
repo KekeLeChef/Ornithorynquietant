@@ -1,12 +1,12 @@
 # Ornithorynquietant 🌏🦆
 
 **« Quand c’est mignon, mais un peu déroutant. »**  
-Un projet de simulation climatique en Python — 
+Un projet de simulation climatique en Python 
 ---
 
 ## 🧭 Présentation du projet
 
-Le projet **Ornithorynquietant** est une initiative éducative visant à explorer les fondements de la modélisation climatique à travers la programmation scientifique en Python. Il se décline en deux versions successives :
+Le projet **Ornithorynquietant** est une initiative visant à explorer les fondements de la modélisation climatique à travers la programmation scientifique en Python. Il se décline en deux versions successives :
 
 ### 🔹 Modèle 1 – 2024
 Première version simplifiée permettant de conceptualiser les mécanismes de base des simulations climatiques. Il s'agit d'une simulation statique conçue l'année dernière. Il existait une barre faisant evoluer les heures de la journée, cependant les calculs se faisaient sans prendre en compte les etats précédants donc sans prendre en compte l'évolution temporel.
@@ -17,11 +17,15 @@ Une version plus avancée intégrant :
 - Un découpage de la Terre en **cellules géographiques** pour un calcul local.
 - Des mécanismes de **diffusion thermique**, rotation terrestre, inclinaison, ou autres phénomènes.
 - Des résultats exploitables pour l'analyse dynamique du climat terrestre.
+- Création de csv pour les capacités thermiques de chaque région.
+- Modèles basés sur la création de csv pour chaque heure utilisé à la simulation suivante.
 
-Ce projet s’adresse principalement à des étudiants ou passionnés souhaitant :
+
+Ce projet s'est principalment focalisé sur :
 - Comprendre les bases physiques du climat.
 - Apprendre la modélisation numérique.
 - Structurer un projet scientifique en Python.
+
 
 ---
 
