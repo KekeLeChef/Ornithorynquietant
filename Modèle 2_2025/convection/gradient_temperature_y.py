@@ -1,6 +1,8 @@
 """
 
-Ce programme permet de calculer le gradient de température selon l'axe (Oy), on considère que les composantes sur (Ox) et (Oz) sont nulles. Ici on considère l'axe (Oy) le long de l'axe de rotation de la Terre et l'axe (Ox) le long de l'équateur. Ici, on le calcule pour une longitude de 0 (+ ou - 3.1°) et une latitude allant de lat_min à lat_max, pour une heure H.
+Ce programme permet de calculer le gradient de température selon l'axe (Oy), on considère que les composantes sur (Ox) et (Oz) sont nulles. 
+Ici on considère l'axe (Oy) le long de l'axe de rotation de la Terre et l'axe (Ox) le long de l'équateur. 
+On le calcule pour une longitude de 0 (+ ou - 3.1°) et une latitude allant de lat_min à lat_max, pour une heure H.
 
 
 """
@@ -38,7 +40,7 @@ T_colonne = temperature_matrix[:, H]
 
 
 
-# Sélection des points avec 0 <= lat <= 30 et |lon| < 3.1°
+# Sélection des points avec lat_min <= lat <= lat_max et |lon| < 3.1°
 mask = (lat_flat >= lat_min) & (lat_flat <= lat_max) & (np.abs(lon_flat) <= 3.1)
 indices_selectionnes = np.where(mask)[0]
 
@@ -71,6 +73,6 @@ for i in range(len(T_sorted) - 1):
 
 # Affichage
 print ("Heure choisie", H, "h")
-print("Latitudes utilisées :", [round(float(lat), 5) for lat in lat_sorted]) #ici arrondi à 5 décimales
-print("Températures :", T_sorted)
+print("Latitudes utilisées :", [round(float(lat), 5) for lat in lat_sorted])
+print("Températures :", [round(float(t), 3) for t in T_sorted])
 print("Gradient dT/dy (K/m) :", dT_dy)
