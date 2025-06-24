@@ -1,6 +1,6 @@
 """
 
-Ce programme permet de calculer le coefficiant de convection h dans la formule du flux thermique convectif
+Ce programme permet de calculer le coefficient de convection h dans la formule du flux thermique convectif
 
 """
 
