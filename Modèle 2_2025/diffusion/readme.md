@@ -1,3 +1,6 @@
+**`carte.py`**:
+
+
 ## SELON LA COMPOSANTE ORTHORADIALE (s'avère être négligeable)
 **`conduction2plaquesfixe.py`** : Simule la diffusion thermique dans une plaque en contact avec un matériau froid, en traçant la température au point milieu gauche au cours du temps. Les CI sont fixées.
 
@@ -18,4 +21,4 @@
 
 **`bilantotalsimple.py`**:
 
-**`carte.py`**:
+
