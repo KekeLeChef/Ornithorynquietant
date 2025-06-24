@@ -43,7 +43,7 @@ import numpy as np
 def project_to_geographic(x, y, z):
     """
     Convertit des coordonnées cartésiennes (x, y, z) en coordonnées géographiques (longitude, latitude) en degrés.
-    Renvoie : (longitude, latitude, rayon)
+    Renvoie : (longitude, latitude) et rayon si on veut
     """
     radius = np.sqrt(x**2 + y**2 + z**2)
 
