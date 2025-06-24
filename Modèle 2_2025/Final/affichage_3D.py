@@ -9,6 +9,9 @@ import shapefile
 import pandas as pd
 from fonctions_modifie2 import update_sun_vector, project_to_sphere, get_shape, get_albedo, calc_power_temp, update_plot, slider_update, set_mois, temp_dans_csv, puissance_cond, change_temp, get_Cp
 import csv
+import os
+import imageio.v2 as imageio
+
 
 
 # Charger les données SHP
@@ -149,6 +152,87 @@ for i, mois in enumerate(mois_labels):
     btn = Button(ax_mois, mois)
     btn.on_clicked(lambda event, m=i + 1: set_mois(m, current_month,tous_fichiers, time_slider, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar))
     btn_mois.append(btn)
+
+
+def gif_24h_pour_mois(index_mois, tous_fichiers, x, y, z, shapes):
+
+    os.makedirs("Gif/frames", exist_ok=True)
+
+    fig = plt.figure(figsize=(10, 7))
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Définir min/max globaux
+    all_temps = tous_fichiers[index_mois]
+    vmin = np.min(all_temps)
+    vmax = np.max(all_temps)
+
+    mappable = plt.cm.ScalarMappable(cmap='viridis', norm=plt.Normalize(vmin=vmin, vmax=vmax))
+    mappable.set_array([])  # requis pour la colorbar
+
+    cbar = fig.colorbar(mappable, ax=ax, shrink=0.5, pad=0.1)
+    cbar.set_label('Température (K)')
+
+    images = []
+
+    for h in range(24):
+        ax.clear()
+        ax.view_init(elev=20, azim=40)
+        temp_dans_csv(tous_fichiers[index_mois][h], x, y, z, ax, shapes, mappable, cbar)
+        plt.title(f"{mois_labels[index_mois]} - {h}h")
+        fname = f"Gif/frames/{mois_labels[index_mois]}_{h:02d}.png"
+        plt.savefig(fname)
+        images.append(imageio.imread(fname))
+        print(f"Image enregistrée : {fname}")
+
+    gif_path = f"Gif/GIF_24h_{mois_labels[index_mois]}.gif"
+    imageio.mimsave(gif_path, images, duration=2)
+    print(f"GIF généré : {gif_path}")
+
+
+def gif_12mois_heure_fixe(heure, tous_fichiers, x, y, z, shapes):
+    import imageio.v2 as imageio
+    import os
+
+    os.makedirs("Gif/frames", exist_ok=True)
+
+    fig = plt.figure(figsize=(10, 7))
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Définir min/max globaux
+    all_temps = [tous_fichiers[i][heure - 1] for i in range(12)]
+    vmin = np.min(all_temps)
+    vmax = np.max(all_temps)
+
+    mappable = plt.cm.ScalarMappable(cmap='viridis', norm=plt.Normalize(vmin=vmin, vmax=vmax))
+    mappable.set_array([])
+
+    cbar = fig.colorbar(mappable, ax=ax, shrink=0.5, pad=0.1)
+    cbar.set_label('Température (K)')
+
+    images = []
+
+    for i in range(12):
+        ax.clear()
+        ax.view_init(elev=20, azim=40)
+        temp_dans_csv(tous_fichiers[i][heure - 1], x, y, z, ax, shapes, mappable, cbar)
+        plt.title(f"{mois_labels[i]} - {heure}h")
+        fname = f"Gif/frames/{mois_labels[i]}_{heure:02d}h.png"
+        plt.savefig(fname)
+        images.append(imageio.imread(fname))
+        print(f"Image enregistrée : {fname}")
+
+    gif_path = f"Gif/GIF_12mois_{heure:02d}h.gif"
+    imageio.mimsave(gif_path, images, duration=2)
+    print(f"GIF généré : {gif_path}")
+
+
+# Générer un GIF sur 24h en janvier
+# gif_24h_pour_mois(0, tous_fichiers, x, y, z, shapes)
+
+
+# Générer un GIF à 12h sur toute l'année
+# gif_12mois_heure_fixe(12, tous_fichiers, x, y, z, shapes)
+
 
 # Affichage de la figure
 plt.show()
