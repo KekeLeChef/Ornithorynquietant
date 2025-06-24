@@ -91,7 +91,7 @@ for i in mois_labels :
     T_sur_24h = []
     rows, cols = 30, 60
     # Lecture du CSV complet
-    data = np.loadtxt(f"{i}.csv", delimiter=",")
+    data = np.loadtxt(f"12_mois/{i}.csv", delimiter=",")
 
     # Extraction de la colonne voulue (1800 valeurs)
     col_data = data[:, 0]  # shape = (1800,)
