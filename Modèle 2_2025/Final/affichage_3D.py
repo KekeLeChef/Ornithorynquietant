@@ -10,7 +10,8 @@ import pandas as pd
 from fonctions_modifie2 import update_sun_vector, project_to_sphere, get_shape, get_albedo, calc_power_temp, update_plot, slider_update, set_mois, temp_dans_csv, puissance_cond, change_temp, get_Cp
 import csv
 import os
-import imageio.v2 as imageio
+import tkinter as tk
+from tkinter import messagebox
 
 
 
