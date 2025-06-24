@@ -31,13 +31,17 @@ Ce projet s’adresse principalement à des étudiants ou passionnés souhaitant
 ```bash
 Ornithorynquietant/
 ├── modele_1_2024/           # Première version du modèle
-│   ├── main.py              # Script principal
-│   ├── utils.py             # Fonctions auxiliaires
-│   └── ...                  # Autres fichiers éventuels
-├── modele_2_2025/           # Deuxième version (avancée)
-│   ├── main.py              # Script principal avec évolution temporelle
-│   ├── grille.py            # Gestion du maillage terrestre
-│   ├── physique.py          # Calculs physiques de température
-│   └── visualisation.py     # Graphiques de simulation
+│   ├── albedo               # dossier contenant les données albedo de la nasa
+│   ├── data                 # dossier contenant les données par l'affichage de la Terre
+│   ├── fonctions.py         # Fonctions auxiliaires
+│   └── ...                  # Toutes les autres fonctions python et les pdf du rendue de l'année dernière 
+├── modele_2_2025/           # Deuxième version (avec temporel)
+│   ├── Annexe               # Contient une autre version test et des archives des précédents test dynamiques
+│   ├── capacite thermique   # Ensemble des fichier servant à la création des documents pour les calculs de capacités thermiques ainsi que les différents test 
+│   ├── convection           # Ensemble des différents test pour les modèle de convection 
+│   ├── diffusion            # Ensemble des éléments pour le modèle de diffusion 
+│   ├── Final                # Le fichier contenant l'ensemble des élémnents essentiel au lancement du programme, 
+│   ├── Synthèse.pdf         # Fichier de synthèse
+│   └── ...
 └── README.md                # Ce fichier
 
