@@ -1,4 +1,4 @@
-**`carte.py`**:
+**`carte.py`**: Génère une carte interactive de la température du sol en fonction de la latitude, de la longitude et de l’heure, avec un curseur permettant de visualiser l’évolution horaire à partir de la lecture du fichier **temperature_grid6.csv**
 
 
 ## SELON LA COMPOSANTE ORTHORADIALE (s'avère être négligeable)
