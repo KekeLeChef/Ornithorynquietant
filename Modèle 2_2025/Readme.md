@@ -13,7 +13,7 @@
 
 ## Diffusion
 
-- Codes de diffusion pour la température ou la puissance (radial et orthoradiale)
+- Codes de diffusion pour la température ou la puissance (radiale et orthoradiale)
 
 ## Annexe
 
