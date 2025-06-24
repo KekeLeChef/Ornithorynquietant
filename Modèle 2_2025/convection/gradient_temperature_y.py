@@ -1,6 +1,8 @@
 """
 
-Ce programme permet de calculer le gradient de température selon l'axe (Oy), on considère que les composantes sur (Ox) et (Oz) sont nulles. Ici on considère l'axe (Oy) le long de l'axe de rotation de la Terre et l'axe (Ox) le long de l'équateur. Ici, on le calcule pour une longitude de 0 (+ ou - 3.1°) et une latitude allant de lat_min à lat_max, pour une heure H.
+Ce programme permet de calculer le gradient de température selon l'axe (Oy), on considère que les composantes sur (Ox) et (Oz) sont nulles. 
+Ici on considère l'axe (Oy) le long de l'axe de rotation de la Terre et l'axe (Ox) le long de l'équateur. 
+On le calcule dans notre cas pour une longitude de 0 (+ ou - 3.1°) et une latitude allant de lat_min à lat_max, pour une heure H.
 
 
 """
