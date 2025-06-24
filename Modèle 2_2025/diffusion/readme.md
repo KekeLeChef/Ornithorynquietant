@@ -11,7 +11,7 @@
 
 
 ## SELON LA COMPOSANTE RADIALE
-**conduction_radiale.py`**: Calcule la puissance surfacique moyenne reçue à la surface en fonction de la température imposée et conserve la mémoire au cours du temps.
+**`conduction_radiale.py`**: Calcule la puissance surfacique moyenne reçue à la surface en fonction de la température imposée et conserve la mémoire au cours du temps.
 
 **`bilan_cond_radiale1.0.py`** : Résout la diffusion thermique 1D dans une barre de 2 m entre une surface et une cave à températures fixées, puis trace et calcule la puissance surfacique instantané et moyen sur 1 h.
 
