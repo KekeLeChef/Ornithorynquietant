@@ -39,5 +39,5 @@ Ornithorynquietant/
 │   ├── grille.py            # Gestion du maillage terrestre
 │   ├── physique.py          # Calculs physiques de température
 │   └── visualisation.py     # Graphiques de simulation
-├── README.md                # Ce fichier
-└── requirements.txt         # Dépendances Python (à créer si manquant)
+└── README.md                # Ce fichier
+
