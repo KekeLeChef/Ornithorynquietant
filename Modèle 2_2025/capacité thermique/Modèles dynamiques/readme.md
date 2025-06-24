@@ -4,4 +4,4 @@
 
 **`modèle_dynamique_test_2.py`** : Pour un mois, janvier pour l'instant, stocke les valeurs de température sur 24 heures pour les 1800 valeurs dans un CSV puis les affiche sur une Terre en 3D.
 
-**`modèle_dynamique_test_3.py`** : Ajout de la variation des capacités thermiques par la fonction **'get_Cp'** mais ne fonctionne pas encore dans ce code
+**`modèle_dynamique_test_3.py`** : Ajout de la variation des capacités thermiques par la fonction **'get_Cp.py'** mais ne fonctionne pas encore dans ce code
