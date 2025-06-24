@@ -2,6 +2,8 @@ import numpy as np
 import shapefile
 import matplotlib.pyplot as plt
 from matplotlib import cm
+import tkinter as tk
+from tkinter import messagebox
 
 def update_sun_vector(mois, sun_vector):
     """
@@ -257,15 +259,20 @@ def set_mois(mois, current_month,tous_fichiers, time_slider, ax, fig, shapes, x,
     """
     mois_labels = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
 
-    info_text = ax.text2D(0.5, 1.02, "", transform=ax.transAxes, ha="center", fontsize=10, color='darkblue')
-
     print(f"🔄 Chargement de la page {mois_labels[mois-1]}...")
     current_month[0] = mois
-    info_text.set_text(f"Chargement du mois de {mois_labels[mois-1]}...")
-    fig.canvas.draw_idle()
+    root = tk.Tk()
+    root.withdraw()  # Ne pas afficher la fenêtre principale
+
+    # Affichage de la popup
+    messagebox.showinfo("Chargement", f"Chargement du mois de {mois_labels[mois-1]}...")
+
+    # Fermer proprement la fenêtre root après le message
+    root.destroy()
+
+
     slider_update(time_slider.val, current_month,tous_fichiers, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar)
-    info_text.set_text("")
-    fig.canvas.draw_idle()
+
 
 
 # Prise en compte de la diffusion radiale
