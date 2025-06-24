@@ -238,6 +238,7 @@ def update_plot(time, mois, ax, fig, shapes, x, y, z, constante_solaire, sigma, 
     ax.set_ylabel('Y (m)')
     ax.set_zlabel('Z (m)')
     ax.set_title(f'Distribution de la puissance radiative reçue par l\'astre à t = {time:.1f} h (mois : {mois})')
+    info_text = ax.text2D(0.5, 1.02, "", transform=ax.transAxes, ha="center", fontsize=10, color='darkblue')
     fig.canvas.draw_idle()
 
 def slider_update(val, current_month, tous_fichiers, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes, mappable,cbar):
@@ -254,9 +255,17 @@ def set_mois(mois, current_month,tous_fichiers, time_slider, ax, fig, shapes, x,
     Prend en entrée le mois sélectionné dans la sidebar : Janvier, Février, Mars, etc.
     Fonction qui met à jour le modèle lorsque l'on clique sur le bouton mois (boutons radio)
     """
-    current_month[0] = mois
-    slider_update(time_slider.val, current_month,tous_fichiers, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar)
+    mois_labels = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
 
+    info_text = ax.text2D(0.5, 1.02, "", transform=ax.transAxes, ha="center", fontsize=10, color='darkblue')
+
+    print(f"🔄 Chargement de la page {mois_labels[mois-1]}...")
+    current_month[0] = mois
+    info_text.set_text(f"Chargement du mois de {mois_labels[mois-1]}...")
+    fig.canvas.draw_idle()
+    slider_update(time_slider.val, current_month,tous_fichiers, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar)
+    info_text.set_text("")
+    fig.canvas.draw_idle()
 
 
 # Prise en compte de la diffusion radiale
@@ -267,7 +276,7 @@ def puissance_cond(T_surf,temps,lat,long):
     d’un appel à l’autre pour garantir la continuité.
 
     Paramètre :
-      - T_surf : température imposée à la surface (K)
+      -T_surf: température imposée à la surface (K)
       -temps: durée de diffusion
       -long:longitude
       -lat:latitude
