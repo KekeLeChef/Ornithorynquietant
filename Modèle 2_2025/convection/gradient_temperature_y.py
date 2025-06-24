@@ -2,7 +2,7 @@
 
 Ce programme permet de calculer le gradient de température selon l'axe (Oy), on considère que les composantes sur (Ox) et (Oz) sont nulles.
 Ici on considère l'axe (Oy) le long de l'axe de rotation de la Terre et l'axe (Ox) le long de l'équateur.
-On le calcule pour une longitude de 0 (+ ou - 3.1°) et une latitude allant de lat_min à lat_max, pour une heure H.
+On le calcule pour une longitude de lon_choisie (+ ou - 3.2°) et une latitude allant de -180° à 180°, pour une heure H.
 
 
 """
@@ -10,7 +10,7 @@ On le calcule pour une longitude de 0 (+ ou - 3.1°) et une latitude allant de l
 import numpy as np
 import pandas as pd
 
-def gradient_temperature_y(fichier, H, lat_min, lat_max) :
+def gradient_temperature_y(fichier, H, lon_choisie) :
 
     # Chargement de la matrice de température taille (1800, 24)
     temperature_matrix = np.loadtxt(fichier, delimiter=",")
@@ -34,8 +34,8 @@ def gradient_temperature_y(fichier, H, lat_min, lat_max) :
 
 
 
-    # Sélection des points avec lat_min <= lat <= lat_max et |lon| < 3.1°
-    mask = (lat_flat >= lat_min) & (lat_flat <= lat_max) & (np.abs(lon_flat) <= 3.1)
+    # Sélection des points avec -90 <= lat <= 90 et |lon - lon_choisie| < 3.2°
+    mask = (lat_flat >= -90) & (lat_flat <= 90) & (np.abs(lon_flat - lon_choisie) <= 3.2)
     indices_selectionnes = np.where(mask)[0]
 
     lat_sel = lat_flat[indices_selectionnes]
@@ -78,8 +78,7 @@ def gradient_temperature_y(fichier, H, lat_min, lat_max) :
 # VARIABLES
 fichier = "temperature_bon3_Tatmo_288.csv" #fichier avec les valeurs de températures
 H = 10 # choix de l'heure entre 0 et 23(choix de la colonne du fichier csv)
-lat_min = 0 #valeurs des latitudes à prendre en compte
-lat_max = 30
+lon_choisie = 90  # longitude à laquelle on se place
 
 
-gradient_temperature_y(fichier, H, lat_min, lat_max)
+gradient_temperature_y(fichier, H, lon_choisie)
