@@ -36,8 +36,8 @@ def gradient_temperature_x(fichier, H, lat_choisie) :
 
 
 
-    # Sélection des points avec 0 <= lon <= 180 et |lat - lat_choisie| < 3.2°
-    mask = (lon_flat >= 0) & (lon_flat <= 180) & (np.abs(lat_flat - lat_choisie) <= 3.2)
+    # Sélection des points avec -180 <= lon <= 180 et |lat - lat_choisie| < 3.2°
+    mask = (lon_flat >= -180) & (lon_flat <= 180) & (np.abs(lat_flat - lat_choisie) <= 3.2)
     indices_selectionnes = np.where(mask)[0]
 
     lat_sel = lat_flat[indices_selectionnes]
