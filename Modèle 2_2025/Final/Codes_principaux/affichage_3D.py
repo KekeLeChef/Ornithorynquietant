@@ -75,7 +75,7 @@ z_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.cos(theta)
 T_sur_24h = []
 rows, cols = 30, 60
 # Lecture du CSV complet
-data = np.loadtxt("Février.csv", delimiter=",")
+data = np.loadtxt("Juillet.csv", delimiter=",")
 
 # Extraction de la colonne voulue (1800 valeurs)
 col_data = data[:, 0]  # shape = (1800,)
