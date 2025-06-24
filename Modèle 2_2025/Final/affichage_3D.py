@@ -79,30 +79,24 @@ current_month = [1]
 ## Lecture csv de tous les fichiers et stockage des températures dans une liste de matrices
 
 # liste de température sur 12 mois
+print("📦 Chargement des fichiers de température mensuels en cours...")
+
 tous_fichiers = []
+rows, cols = 30, 60
 
-for i in mois_labels :
-
-    #lecture de janvier par défaut
+for i in mois_labels:
+    print(f"  → Chargement de {i}.csv...")
     T_sur_24h = []
-    rows, cols = 30, 60
-    # Lecture du CSV complet
-    data = np.loadtxt(f"{i}.csv", delimiter=",")
+    data = np.loadtxt(f"12_mois/{i}.csv", delimiter=",")
 
-    # Extraction de la colonne voulue (1800 valeurs)
-    col_data = data[:, 0]  # shape = (1800,)
-
-    # Reshape en 30 x 60 (ordre par lignes = C-order, comme flatten())
-    T_reconstruit = col_data.reshape((rows, cols))
-
-    for k in range(1,25):
-        col_data = data[:,k-1]
+    for k in range(1, 25):
+        col_data = data[:, k - 1]
         T_reconstruit = col_data.reshape((rows, cols))
         T_sur_24h.append(T_reconstruit)
 
-
-
     tous_fichiers.append(np.array(T_sur_24h))
+
+print("✅ Tous les fichiers de température ont été chargés avec succès.\n")
 
 
 ##  3D
@@ -150,7 +144,7 @@ btn_mois = []
 for i, mois in enumerate(mois_labels):
     ax_mois = plt.axes([0.1, 0.95 - i * 0.07, 0.1, 0.04])
     btn = Button(ax_mois, mois)
-    btn.on_clicked(lambda event, m=i + 1: set_mois(m, current_month,tous_fichiers, time_slider, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar))
+    btn.on_clicked(lambda event, m=i + 1: set_mois(m, current_month, tous_fichiers, time_slider, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes, mappable, cbar))
     btn_mois.append(btn)
 
 
