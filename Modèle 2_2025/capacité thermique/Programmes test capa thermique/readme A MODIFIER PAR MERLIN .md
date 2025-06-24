@@ -15,3 +15,6 @@ Placer ensuite **une copie du programme avec une image dans le même fichier**.
 
 
 
+
+
+
