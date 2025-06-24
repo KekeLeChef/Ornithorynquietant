@@ -19,6 +19,9 @@ Utilise les proportions issues du script précédent pour calculer la capacité 
 **`sum_capacity.py`**
 Calcule la somme des capacités thermiques de toutes les sections pour vérifier la cohérence avec la capacité thermique terrestre globale.
 
+**`Calcul_capacité_thermique_api.py`**
+Calcule, avec Google Earth Engine, la capacité thermique des sols dans un carré de 10 km autour d’un point donné, à partir de la carte ESA WorldCover 2020.
+
 
 
 
