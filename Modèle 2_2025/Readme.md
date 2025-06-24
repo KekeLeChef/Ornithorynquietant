@@ -7,4 +7,10 @@
 
 - Fonctions pour déterminer la capacité thermique en chaque point et fichier utilisé dans les codes principaux
 
-## 
+## Convection
+
+- Différents codes et tests
+
+## Diffusion
+
+- Codes de diffusion pour la température ou la puissance (radial et orthoradiale)
