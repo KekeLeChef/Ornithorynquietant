@@ -12,7 +12,7 @@ import pandas as pd
 
 
 
-def gradient_temperature_y(fichier, H, lat_choisie) :
+def gradient_temperature_x(fichier, H, lat_choisie) :
 
     # Chargement de la matrice de température taille (1800, 24) --> attention à la taille du fichier!
     temperature_matrix = np.loadtxt(fichier, delimiter=",")
@@ -87,4 +87,4 @@ H = 10  # choix de l'heure entre 0 et 23 (choix de la colonne du fichier csv)
 lat_choisie = 0  # latitude à laquelle on se place
 
 
-gradient_temperature_y(fichier, H, lat_choisie)
+gradient_temperature_x(fichier, H, lat_choisie)
