@@ -1,16 +1,23 @@
 """
 
-Ce programme permet de calculer le gradient de température selon l'axe (Oy), on considère que les composantes sur (Ox) et (Oz) sont nulles. Ici on considère l'axe (Oy) le long de l'axe de rotation de la Terre et l'axe (Ox) le long de l'équateur. Ici, on le calcule pour une longitude de 0 (+ ou - 3.1°) et une latitude allant de 0 à 30.
- Pour le faire fonctionner, il faut avoir le fichier "température_bon3_Tatmo_288.csv" enregistré au même endroit que le programme.
+Ce programme permet de calculer le gradient de température selon l'axe (Oy), on considère que les composantes sur (Ox) et (Oz) sont nulles. Ici on considère l'axe (Oy) le long de l'axe de rotation de la Terre et l'axe (Ox) le long de l'équateur. Ici, on le calcule pour une longitude de 0 (+ ou - 3.1°) et une latitude allant de lat_min à lat_max, pour une heure H.
+
 
 """
 
 import numpy as np
 import pandas as pd
 
+# VARIABLES
+fichier = "temperature_bon3_Tatmo_288.csv" #fichier avec les valeurs de températures
+H = 10 # choix de l'heure entre 0 et 23(choix de la colonne du fichier csv)
+lat_min = 0 #valeurs des latitudes à prendre en compte
+lat_max = 30
+
+
 
 # Chargement de la matrice de température taille (1800, 24)
-temperature_matrix = np.loadtxt("temperature_bon3_Tatmo_288.csv", delimiter=",")
+temperature_matrix = np.loadtxt(fichier, delimiter=",")
 
 
 
@@ -27,13 +34,12 @@ lon_flat = lon_all.flatten()     # longitudes de chaque points (vecteur 1D (1800
 
 
 # Température à une heure fixé
-H = 10 # choix de l'heure (choix de la colonne du fichier csv)
 T_colonne = temperature_matrix[:, H]
 
 
 
 # Sélection des points avec 0 <= lat <= 30 et |lon| < 3.1°
-mask = (lat_flat >= 0) & (lat_flat <= 30) & (np.abs(lon_flat) <= 3.1)
+mask = (lat_flat >= lat_min) & (lat_flat <= lat_max) & (np.abs(lon_flat) <= 3.1)
 indices_selectionnes = np.where(mask)[0]
 
 lat_sel = lat_flat[indices_selectionnes]

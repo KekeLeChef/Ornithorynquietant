@@ -90,19 +90,31 @@ def get_albedo(lat, lon, mois, list_albedo, latitudes, longitudes):
     return list_albedo[mois-1][lat_idx, lon_idx]
 
 
-def get_Cp(x, y, z, capacity_parsed, k=5):
+def get_Cp(x, y, z, list_Cp, k=5):
+    """
+    Retourne la capacité thermique du point du DataFrame le plus proche des coordonnées choisie en utilisant la fonction project_to_geographic pour les convertir en lat et en long
+
+
+    Arguments:
+        x,y,z : coordonnées cartésiennes (float)
+        list_Cp (pd.DataFrame): DataFrame avec colonnes 'latitude', 'longitude', 'heat_capacity'.
+        k : valeur utilisée pour l'autocorrélation (à réduire si on veut plus de précision)
+    Returns:
+        float: La capacité thermique du point le plus proche.
+    """
+
     lon, lat= project_to_geographic(x, y, z)
 
     if np.isnan(lon) or np.isnan(lat):
         return 0
 
-    distances = ((capacity_parsed['latitude'] - lat)**2 + (capacity_parsed['longitude'] - lon)**2)
+    distances = ((list_Cp['latitude'] - lat)**2 + (list_Cp['longitude'] - lon)**2)
 
     if distances.isna().all():
         return 0
 
     closest_indices = distances.nsmallest(k).index
-    mean_cp = capacity_parsed.loc[closest_indices]['cp_J_per_K'].mean()
+    mean_cp = list_Cp.loc[closest_indices]['cp_J_per_K'].mean()
     return mean_cp
 
 

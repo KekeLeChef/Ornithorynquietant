@@ -1,8 +1,10 @@
+"""Code qui permet d'afficher les differents points de température sur une carte en ligne à partir du fichier CSV contenant position et température"""
+
 import pandas as pd
 import plotly.express as px
 
 # 1) Charger le CSV que vous avez généré
-df = pd.read_csv("temperature_grid6.csv")
+df = pd.read_csv("temperature_grid6.csv") #mettre votre fichier csv
 
 # 2) Tracer la carte avec slider sur l’heure H
 fig = px.scatter_geo(
