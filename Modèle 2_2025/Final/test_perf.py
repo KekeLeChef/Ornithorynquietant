@@ -62,7 +62,7 @@ if __name__ == "__main__":
     temperature_matrix = np.zeros((L, l))
 
     # Température initiale
-    _, T0 = calc_power_temp(0,11, sun_vector, x, y, z, phi, theta,
+    _, T0 = calc_power_temp(0,12, sun_vector, x, y, z, phi, theta,
                             constante_solaire, sigma, rayon_astre, list_albedo, latitudes, longitudes)
     temp_simu = T0.flatten()
 
@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
         # Boucle sur 600 heures (1 mois simulé)
         for i in range(1, 601):
-            P, _ = calc_power_temp(i,11, sun_vector, x, y, z, phi, theta,
+            P, _ = calc_power_temp(i,12, sun_vector, x, y, z, phi, theta,
                                    constante_solaire, sigma, rayon_astre, list_albedo, latitudes, longitudes)
             P_flat = P.flatten()
             args = [(k, temp_simu[k], P_flat[k], x_flat[k], y_flat[k], z_flat[k]) for k in range(L)]
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 
         # Boucle sur 24 heures pour enregistrement
         for h in range(1, 25):
-            P, _ = calc_power_temp(h, 11, sun_vector, x, y, z, phi, theta,
+            P, _ = calc_power_temp(h, 12, sun_vector, x, y, z, phi, theta,
                                    constante_solaire, sigma, rayon_astre, list_albedo, latitudes, longitudes)
             P_flat = P.flatten()
             temp_avant = temp_simu if h == 1 else temperature_matrix[:, h - 2]
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     temperature_matrix = np.zeros((L, l))
 
     # Température initiale
-    _, T0 = calc_power_temp(0, 11, sun_vector, x, y, z, phi, theta,
+    _, T0 = calc_power_temp(0, 12, sun_vector, x, y, z, phi, theta,
                             constante_solaire, sigma, rayon_astre, list_albedo, latitudes, longitudes)
     temp_simu = T0.flatten()
 
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
         # Boucle sur 600 heures (1 mois simulé)
         for i in range(1, 601):
-            P, _ = calc_power_temp(i, 11, sun_vector, x, y, z, phi, theta,
+            P, _ = calc_power_temp(i, 12, sun_vector, x, y, z, phi, theta,
                                    constante_solaire, sigma, rayon_astre, list_albedo, latitudes, longitudes)
             P_flat = P.flatten()
             args = [(k, temp_simu[k], P_flat[k], x_flat[k], y_flat[k], z_flat[k]) for k in range(L)]
@@ -113,7 +113,7 @@ if __name__ == "__main__":
 
         # Boucle sur 24 heures pour enregistrement
         for h in range(1, 25):
-            P, _ = calc_power_temp(h, 11, sun_vector, x, y, z, phi, theta,
+            P, _ = calc_power_temp(h, 12, sun_vector, x, y, z, phi, theta,
                                    constante_solaire, sigma, rayon_astre, list_albedo, latitudes, longitudes)
             P_flat = P.flatten()
             temp_avant = temp_simu if h == 1 else temperature_matrix[:, h - 2]
@@ -122,4 +122,4 @@ if __name__ == "__main__":
             temperature_matrix[:, h - 1] = T_flat
 
     # Sauvegarde CSV
-    np.savetxt("Novembre.csv", temperature_matrix, delimiter=",")
+    np.savetxt("Décembre.csv", temperature_matrix, delimiter=",")
