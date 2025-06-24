@@ -27,7 +27,7 @@ def calcul_h(T_sol, T_air) :
 
     Ra = Gr * Pr # nombre de Rayleigh
 
-    Nu = C * abs(Ra)**(1/4)
+    Nu = C * abs(Ra)**n
 
     h = Nu * lam / Lc # par def du nombre de Nusselt
 
