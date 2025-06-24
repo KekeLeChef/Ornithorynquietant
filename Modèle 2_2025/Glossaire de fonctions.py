@@ -139,11 +139,11 @@ def P_em_diffusion(T_surf,temps,lat,long):
 
 
 def P_em_surf_conv(lat: float, long: float, t: float):
-    return 0
+    return 18
 
 
 def P_em_surf_evap(lat: float, long: float, t: float):
-    return 0
+    return 86
 
 
 ## Atmosphere
@@ -155,7 +155,7 @@ def P_em_surf_evap(lat: float, long: float, t: float):
 #     puissance_effet_serre = (sigma*T_atmo** 4)
 #
 #     # Puissance totale reçue
-#     puissance_recue += puissance_effet_serre
+#     puissance_recue  += puissance_effet_serre
 #
 #     temperature = (puissance_recue / sigma) ** 0.25
 #
@@ -163,17 +163,17 @@ def P_em_surf_evap(lat: float, long: float, t: float):
 
 def P_abs_atm_solar(lat: float, long: float, t: float, Pinc: float):
     AbsAtmo = 0.22
-    return 0
+    return AbsAtmo * Pinc
 
 
 def P_abs_atm_thermal(lat: float, long: float, t: float, T: float):
-    return 0
+    return 358
 
 
 def P_em_atm_thermal_up(lat: float, long: float, t: float):
-    return 0
+    return 170
 
 
 def P_em_atm_thermal_down(lat: float, long: float, t: float):
-    return 0
+    return 340
 

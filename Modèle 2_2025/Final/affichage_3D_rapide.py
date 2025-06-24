@@ -69,29 +69,22 @@ y_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.sin(theta) * np.sin
 z_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.cos(theta)
 
 
-
+# Ensemble des mois
 mois_labels = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
+
+# Mois de janvier par défaut
 current_month = [1]
 
-## Lecture csv de tous les fichiers et stockage des températures dans une liste de matrices
-
-# liste de température sur 12 mois
-tous_fichiers = []
-
-
-# for idx, mois in enumerate(mois_labels):
-#     var_name = f"temp_{mois}"  # exemple: temp_Janvier
-#     globals()[var_name] = tous_fichiers[idx]
+## Lecture csv de tous les fichiers et stockage des températures dans des matrices
 
 for i in mois_labels :
-
 
     var_name = f"temp_{i}"
     #lecture de janvier par défaut
     T_sur_24h = []
     rows, cols = 30, 60
     # Lecture du CSV complet
-    data = np.loadtxt(f"{i}.csv", delimiter=",")
+    data = np.loadtxt(f"12_mois/{i}.csv", delimiter=",")
 
     # Extraction de la colonne voulue (1800 valeurs)
     col_data = data[:, 0]  # shape = (1800,)
@@ -107,7 +100,6 @@ for i in mois_labels :
 
     globals()[var_name] = np.array(T_sur_24h)
     print(temp_Janvier)
-    # tous_fichiers.append(np.array(T_sur_24h))
 
 tous_fichiers = [temp_Janvier,temp_Février,temp_Mars,temp_Avril,temp_Mai,temp_Juin,temp_Juillet,temp_Août,temp_Septembre,temp_Octobre,temp_Novembre,temp_Décembre]
 
@@ -117,7 +109,6 @@ tous_fichiers = [temp_Janvier,temp_Février,temp_Mars,temp_Avril,temp_Mai,temp_J
 # Création de la figure et de l'axe
 fig = plt.figure(figsize=(10, 7))
 ax = fig.add_subplot(111, projection='3d')
-
 
 # Définir les bornes min/max sur toutes les données (les 24 heures)
 all_temps = tous_fichiers[0][0]
@@ -130,18 +121,12 @@ mappable.set_array([])  # Nécessaire mais contenu vide ici
 
 cbar = fig.colorbar(mappable, ax=ax, shrink=0.5, pad=0.1)
 cbar.set_label('Température (K)')
-#
-# mappable = plt.cm.ScalarMappable(cmap='viridis')
-# mappable.set_array([np.min(T_reconstruit),np.max(T_reconstruit)])
-# cbar = fig.colorbar(mappable, ax=ax, shrink=0.5, pad=0.1)
-# cbar.set_label('Température (K)')
-
 
 
 ## Initialisation du graphique
 
+# Affichage par défaut en janvier à l'heure 0
 temp_dans_csv (tous_fichiers[0][0],x,y,z,ax,shapes,mappable,cbar )
-
 
 # Création du slider
 ax_slider = plt.axes([0.25, 0.02, 0.50, 0.03], facecolor='lightgoldenrodyellow')
@@ -149,7 +134,6 @@ time_slider = Slider(ax_slider, 'Time (h)', 1, 24, valinit=0, valstep=1)
 
 # Liaison du slider à la fonction de mise à jour
 time_slider.on_changed(lambda val: slider_update(val, current_month,tous_fichiers, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar))
-
 
 # Création des axes et boutons pour chaque mois
 btn_mois = []
