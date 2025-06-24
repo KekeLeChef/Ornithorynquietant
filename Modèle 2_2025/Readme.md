@@ -14,3 +14,11 @@
 ## Diffusion
 
 - Codes de diffusion pour la température ou la puissance (radial et orthoradiale)
+
+## Annexe
+
+- Codes simplifiés et différents des codes principaux mais avec des valeurs peu cohérentes
+
+## Archives
+
+- Anciens codes prenant en compte l'évolution temporelle (boucle sur 24h)
