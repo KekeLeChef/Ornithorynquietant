@@ -1,4 +1,4 @@
 ### Programmes test capa thermique
-Dossier des différents test de calculs de capacités thermiques, certains sont plus précis mais bien plus et pas developpé car pas utilisées
+Dossier des différents tests de calculs de capacités thermiques, certains sont plus précis et pas developpés car pas utilisés.
 ### Utile 
-Contient les fichiers utilisés pour la creation du fichier csv des capacités thermique en fonctions des coordonnées
+Contient les fichiers utilisés pour la création du fichier csv des capacités thermique en fonctions des coordonnées
