@@ -1,7 +1,7 @@
 # Ornithorynquietant 🌏🦆
 
 **« Quand c’est mignon, mais un peu déroutant. »**  
-Un projet de simulation climatique en Python 
+Un projet de simulation climatique en Python — 
 ---
 
 ## 🧭 Présentation du projet
