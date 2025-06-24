@@ -2,7 +2,7 @@
 
 Ce programme permet de calculer le gradient de température selon l'axe (Ox), on considère que les composantes sur (Oy) et (Oz) sont nulles.
 Ici on considère l'axe (Oy) le long de l'axe de rotation de la Terre et l'axe (Ox) le long de l'équateur.
-On le calcule pour une latitude de 0 (+ ou - 3.1°) et une longitude allant de lon_min à lon_max, pour une heure H.
+On le calcule pour une latitude de lat_choisie (+ ou - 3.2°) et une longitude allant de -180° à 180°, pour une heure H.
 
 
 """
@@ -12,7 +12,7 @@ import pandas as pd
 
 
 
-def gradient_temperature_y(fichier, H, lat_choisie) :
+def gradient_temperature_x(fichier, H, lat_choisie) :
 
     # Chargement de la matrice de température taille (1800, 24) --> attention à la taille du fichier!
     temperature_matrix = np.loadtxt(fichier, delimiter=",")
@@ -22,7 +22,7 @@ def gradient_temperature_y(fichier, H, lat_choisie) :
 
     # Génération des grilles latitude / longitude
     latitudes = np.linspace(-90, 90, 30)         # 30 latitudes
-    longitudes = np.linspace(0, 180, 60)         # 60 longitudes
+    longitudes = np.linspace(-180, 180, 60)         # 60 longitudes
 
     # Construction de la grille complète
     lat_all, lon_all = np.meshgrid(latitudes, longitudes, indexing='ij')  # matrices 2D (30, 60)
@@ -36,8 +36,8 @@ def gradient_temperature_y(fichier, H, lat_choisie) :
 
 
 
-    # Sélection des points avec 0 <= lon <= 180 et |lat - lat_choisie| < 3.2°
-    mask = (lon_flat >= 0) & (lon_flat <= 180) & (np.abs(lat_flat - lat_choisie) <= 3.2)
+    # Sélection des points avec -180 <= lon <= 180 et |lat - lat_choisie| < 3.2°
+    mask = (lon_flat >= -180) & (lon_flat <= 180) & (np.abs(lat_flat - lat_choisie) <= 3.2)
     indices_selectionnes = np.where(mask)[0]
 
     lat_sel = lat_flat[indices_selectionnes]
@@ -87,4 +87,4 @@ H = 10  # choix de l'heure entre 0 et 23 (choix de la colonne du fichier csv)
 lat_choisie = 0  # latitude à laquelle on se place
 
 
-gradient_temperature_y(fichier, H, lat_choisie)
+gradient_temperature_x(fichier, H, lat_choisie)

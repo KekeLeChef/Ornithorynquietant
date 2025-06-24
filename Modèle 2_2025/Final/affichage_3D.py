@@ -70,12 +70,17 @@ z_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.cos(theta)
 
 
 
+mois_labels = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
+current_month = [1]
+
 ## Lecture csv et stockage des infos dans une matrice
+# Modifier le nom du fichier ouvert et changer T_sur_24h avec les bonnes valeurs !!!!!!!!
+
 
 T_sur_24h = []
 rows, cols = 30, 60
 # Lecture du CSV complet
-data = np.loadtxt("Février.csv", delimiter=",")
+data = np.loadtxt("Janvier.csv", delimiter=",")
 
 # Extraction de la colonne voulue (1800 valeurs)
 col_data = data[:, 0]  # shape = (1800,)
@@ -115,8 +120,8 @@ cbar.set_label('Température (K)')
 # cbar.set_label('Température (K)')
 
 ## Initialisation du graphique
-current_month = [1]
-temp_dans_csv (T_sur_24h[0],x,y,z,ax,shapes,mappable,cbar )
+
+temp_dans_csv (T_sur_24h[0],current_month,x,y,z,ax,shapes,mappable,cbar )
 #surf = ax.plot_surface(x, y, z, facecolors=plt.cm.viridis(T_reconstruit/np.max(T_reconstruit)), rstride=1, cstride=1, linewidth=1)
 
 #update_plot(0, current_month[0], ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes)
@@ -130,7 +135,6 @@ time_slider.on_changed(lambda val: slider_update(T_sur_24h[val-1], current_month
 
 
 # Création des axes et boutons pour chaque mois
-mois_labels = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
 btn_mois = []
 
 for i, mois in enumerate(mois_labels):
