@@ -189,12 +189,12 @@ def change_temp (Ti, Cp, Pr, dt, sigma,S_terre) :
 
 
 
-def temp_dans_csv (temp,month,x,y,z,ax,shapes,mappable,cbar ):
+def temp_dans_csv (temp,x,y,z,ax,shapes,mappable,cbar ):
+    """
+    """
 
     ax.clear()
     surf = ax.plot_surface(x, y, z, facecolors=plt.cm.viridis(temp/np.max(temp)), rstride=1, cstride=1, linewidth=1)
-
-
 
     colors = plt.cm.viridis((temp - np.min(temp)) / (np.max(temp) - np.min(temp)))
     ax.plot_surface(x, y, z, facecolors=colors, rstride=1, cstride=1, linewidth=0, antialiased=False, shade=False)
@@ -240,21 +240,22 @@ def update_plot(time, mois, ax, fig, shapes, x, y, z, constante_solaire, sigma, 
     ax.set_title(f'Distribution de la puissance radiative reçue par l\'astre à t = {time:.1f} h (mois : {mois})')
     fig.canvas.draw_idle()
 
-def slider_update(val, current_month, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes, mappable,cbar):
+def slider_update(val, current_month, tous_fichiers, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes, mappable,cbar):
     """
     Prend en entrée l'heure de la journée, le mois, l'axe, la figure, shapes, les coordonnées (x,y,z), les constantes :sigma, phi, theta, rayon_astre_m, la liste d'albedo, la latitude et la longitude
     Fonction qui update le modèle lorsque l'on fait varier la valeur de temps.
     """
-    temp_dans_csv (val,current_month[0],x,y,z,ax,shapes,mappable,cbar )
+    valeur_temp = tous_fichiers[current_month[0]-1][val-1]
+    temp_dans_csv (valeur_temp,x,y,z,ax,shapes,mappable,cbar )
     # update_plot(val, current_month[0], ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes)
 
-def set_mois(mois, current_month, time_slider, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes):
+def set_mois(mois, current_month,tous_fichiers, time_slider, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar):
     """
     Prend en entrée le mois sélectionné dans la sidebar : Janvier, Février, Mars, etc.
     Fonction qui met à jour le modèle lorsque l'on clique sur le bouton mois (boutons radio)
     """
     current_month[0] = mois
-    slider_update(time_slider.val, current_month, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar)
+    slider_update(time_slider.val, current_month,tous_fichiers, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar)
 
 
 

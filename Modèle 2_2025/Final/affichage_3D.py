@@ -73,26 +73,33 @@ z_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.cos(theta)
 mois_labels = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
 current_month = [1]
 
-## Lecture csv et stockage des infos dans une matrice
-# Modifier le nom du fichier ouvert et changer T_sur_24h avec les bonnes valeurs !!!!!!!!
+## Lecture csv de tous les fichiers et stockage des températures dans une liste de matrices
 
+# liste de température sur 12 mois
+tous_fichiers = []
 
-T_sur_24h = []
-rows, cols = 30, 60
-# Lecture du CSV complet
-data = np.loadtxt("Janvier.csv", delimiter=",")
+for i in mois_labels :
 
-# Extraction de la colonne voulue (1800 valeurs)
-col_data = data[:, 0]  # shape = (1800,)
+    #lecture de janvier par défaut
+    T_sur_24h = []
+    rows, cols = 30, 60
+    # Lecture du CSV complet
+    data = np.loadtxt(f"{i}.csv", delimiter=",")
 
-# Reshape en 30 x 60 (ordre par lignes = C-order, comme flatten())
-T_reconstruit = col_data.reshape((rows, cols))
+    # Extraction de la colonne voulue (1800 valeurs)
+    col_data = data[:, 0]  # shape = (1800,)
 
-for k in range(1,25):
-    col_data = data[:,k-1]
+    # Reshape en 30 x 60 (ordre par lignes = C-order, comme flatten())
     T_reconstruit = col_data.reshape((rows, cols))
-    T_sur_24h.append(T_reconstruit)
 
+    for k in range(1,25):
+        col_data = data[:,k-1]
+        T_reconstruit = col_data.reshape((rows, cols))
+        T_sur_24h.append(T_reconstruit)
+
+
+
+    tous_fichiers.append(np.array(T_sur_24h))
 
 
 ##  3D
@@ -103,7 +110,7 @@ ax = fig.add_subplot(111, projection='3d')
 
 
 # Définir les bornes min/max sur toutes les données (les 24 heures)
-all_temps = np.array(T_sur_24h)
+all_temps = tous_fichiers[0][0]
 vmin = np.min(all_temps)
 vmax = np.max(all_temps)
 
@@ -119,19 +126,19 @@ cbar.set_label('Température (K)')
 # cbar = fig.colorbar(mappable, ax=ax, shrink=0.5, pad=0.1)
 # cbar.set_label('Température (K)')
 
+
+
 ## Initialisation du graphique
 
-temp_dans_csv (T_sur_24h[0],current_month,x,y,z,ax,shapes,mappable,cbar )
-#surf = ax.plot_surface(x, y, z, facecolors=plt.cm.viridis(T_reconstruit/np.max(T_reconstruit)), rstride=1, cstride=1, linewidth=1)
+temp_dans_csv (tous_fichiers[0][0],x,y,z,ax,shapes,mappable,cbar )
 
-#update_plot(0, current_month[0], ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes)
 
 # Création du slider
 ax_slider = plt.axes([0.25, 0.02, 0.50, 0.03], facecolor='lightgoldenrodyellow')
 time_slider = Slider(ax_slider, 'Time (h)', 1, 24, valinit=0, valstep=1)
 
 # Liaison du slider à la fonction de mise à jour
-time_slider.on_changed(lambda val: slider_update(T_sur_24h[val-1], current_month, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar))
+time_slider.on_changed(lambda val: slider_update(val, current_month,tous_fichiers, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar))
 
 
 # Création des axes et boutons pour chaque mois
@@ -140,7 +147,7 @@ btn_mois = []
 for i, mois in enumerate(mois_labels):
     ax_mois = plt.axes([0.1, 0.95 - i * 0.07, 0.1, 0.04])
     btn = Button(ax_mois, mois)
-    btn.on_clicked(lambda event, m=i + 1: set_mois(m, current_month, time_slider, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes))
+    btn.on_clicked(lambda event, m=i + 1: set_mois(m, current_month,tous_fichiers, time_slider, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar))
     btn_mois.append(btn)
 
 # Affichage de la figure
