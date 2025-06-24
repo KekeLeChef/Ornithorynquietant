@@ -19,8 +19,8 @@
 ## 📁 Structure du projet
 
 /
-├── modele_1_2024/ # Première version du modèle
-│ └── ... # Scripts, exemples et données
-├── modele_2_2025/ # Deuxième version améliorée
-│ └── ... # Simulations, résultats et visualisations
-└── README.md # Ce fichier
+├── modele_1_2024/ # Première version du modèle  
+│ └── ... # Scripts, exemples et données  
+├── modele_2_2025/ # Deuxième version améliorée  
+│ └── ... # Simulations, résultats et visualisations  
+└── README.md # Ce fichier  
