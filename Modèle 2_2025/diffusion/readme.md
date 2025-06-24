@@ -8,7 +8,7 @@
 
 
 ## SELON LA COMPOSANTE RADIALE
-**`conduction_radiale.py`**: Calcule la température surfacique moyenne reçue à la surface en fonction de la température imposée (à 10m de profondeur par exemple)
+**`conductionradiale.py`**: Calcule la température surfacique moyenne reçue à la surface en fonction de la température imposée (à 10m de profondeur par exemple)
 
 **`diffusionpuissancefinal.py`**: Calcule la puissance surfacique moyenne reçue à la surface en fonction de la température imposée et conserve la mémoire de température au cours du temps.
 
