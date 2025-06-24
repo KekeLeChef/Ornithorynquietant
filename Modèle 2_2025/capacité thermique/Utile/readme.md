@@ -5,4 +5,4 @@ Calcule la proportion de terre, d’eau et de glace pour chaque latitude et long
 
 **`grid_1800_land_water_ice.csv`**:
 
-**`capacite_thermique_par_cellule.csv`**`:
+**`capacite_thermique_par_cellule.csv`**:
