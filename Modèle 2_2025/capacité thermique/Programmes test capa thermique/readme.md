@@ -13,6 +13,9 @@ Celui-ci donne accès aux **images sans avoir à télécharger un fichier `.zip`
 Placer ensuite **une copie du programme avec une image dans le même fichier**.  
 **SURTOUT NE PAS ESSAYER DE PUSH DANS GITHUB**, les images sont **trop lourdes** pour pouvoir être téléversées.
 
+**`sum_capacity.py`**
+Calcule la somme des capacités thermiques de toutes les sections pour vérifier la cohérence avec la capacité thermique terrestre globale.
+
 
 
 
