@@ -6,4 +6,5 @@
 
 **`Convection_test_3.py`**: Modèle amélioré de la version 2. Produit un graphique du “Flux thermique net entre les plaques (via l’air)” sur 24 h.
 
-**`modele_convectif`**:
+**`modele_convectif`**: Évaluation, pour chaque section de l’atmosphère et du sol, le changement de température de l’air selon le rayon (dTij) sous l’effet du bilan radiatif et de la convection, puis calcul de la puissance échangée entre l’air et le sol. 
+Produit un graphique montrant l'évolution de la température de l'air et du flux convectif échangé avec le sol.

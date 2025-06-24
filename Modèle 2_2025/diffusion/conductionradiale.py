@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Paramètres physiques et numériques
-L       = 10          # longueur de la barre (m)
+L       = 1          # longueur de la barre (m)
 N       = 13           # nombre de nœuds (impair pour point milieu exact)
 dx      = L/(N-1)      # pas spatial
 D       = 5e-4         # diffusivité (m²/s)
@@ -10,7 +10,7 @@ T0      = 10        # température initiale (°C) sur tout le segment
 T_fixed = 15.0        # extrémité droite maintenue à cette T (°C)
 
 dt      = 0.25*dx**2/D # pas de temps pour stabilité explicite
-t_final = 100000.0      # durée totale (s)
+t_final = 5000.0      # durée totale (s)
 n_steps = int(np.ceil(t_final/dt))
 times   = np.linspace(0, t_final, n_steps+1)
 
@@ -35,7 +35,7 @@ for n in range(1, n_steps+1):
 plt.figure(figsize=(8,5))
 plt.plot(times, T_history_left, color='orange')
 plt.xlabel('Temps (s)')
-plt.ylabel('Température à l\'extrémité gauche (°C)')
-plt.title('Evolution de la température à l\'extrémité libre')
+plt.ylabel('Température à l\'extrémité (°C)')
+plt.title('Evolution de la température à l\'extrémité')
 plt.grid(True)
 plt.show()
