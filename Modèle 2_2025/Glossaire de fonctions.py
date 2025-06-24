@@ -7,7 +7,7 @@ from fonctions_modifie2 import update_sun_vector, project_to_sphere, get_shape, 
 
 
 
-#Surface
+## Surface
 
 def P_abs_surf_solar(time, mois, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes):
     """
@@ -71,7 +71,10 @@ def P_abs_surf_solar(time, mois, sun_vector, x, y, z, phi, theta, constante_sola
     return puissance_recue, temperature
 
 
-# Diffusion
+##Surface
+
+# Surface
+
 def P_em_diffusion(T_surf,temps,lat,long):
     """
     Calcule la puissance surfacique moyenne reçue à la surface pendant un temps choisie (normalement 1h),
@@ -134,7 +137,16 @@ def P_em_diffusion(T_surf,temps,lat,long):
     puiss = flux.mean()
     return puiss
 
-# Atmosphere
+
+def P_em_surf_conv(lat: float, long: float, t: float):
+    return 0
+
+
+def P_em_surf_evap(lat: float, long: float, t: float):
+    return 0
+
+
+## Atmosphere
 
 # #Ajout de l'effet de serre (dans P_abs_surf_solar)
 #
@@ -164,3 +176,4 @@ def P_em_atm_thermal_up(lat: float, long: float, t: float):
 
 def P_em_atm_thermal_down(lat: float, long: float, t: float):
     return 0
+
