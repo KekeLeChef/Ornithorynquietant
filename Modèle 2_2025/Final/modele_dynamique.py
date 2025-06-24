@@ -47,6 +47,8 @@ constante_solaire = 1361  # W/m^2, valeur moyenne au niveau de la Terre
 rayon_astre = 6371  # km, par exemple le rayon de la Terre
 sigma = 5.670e-8  # Constante de Stefan-Boltzmann en W/m^2/K^4
 epaisseur_atmosphere = 600  # km, approximative thickness of Earth's atmosphere
+S_terre = 510 * 10**12 # m^2
+sun_vector = np.array([1, 0, 0])
 
 rayon_astre_m = rayon_astre * 1000
 epaisseur_atmosphere_m = epaisseur_atmosphere * 1000
@@ -69,21 +71,7 @@ y_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.sin(theta) * np.sin
 z_atmosphere = (rayon_astre_m + epaisseur_atmosphere_m) * np.cos(theta)
 
 
-## Test températures sur 24H et stockage desdonnées dans un fichier csv pour les 1800 points
-
-sun_vector = np.array([1, 0, 0])
-
-S_terre = 510 * 10**12 # m^2
-# Capacité thermique massique du sol
-Cpm = 1000  #J*kg**-1*K**-1
-mu_sol_sec = 1000 #kg*m**-3
-epaisseur = 5*10**-2 #m
-# Cpm = 4180 #J*kg**-1*K**-1 pour l'eau
-
-# Capacité thermique d'un carré
-# Cp = Cpm*mu_sol_sec*epaisseur*(S_terre/1800)
-# print("Cp = ", Cp)
-
+## Test températures sur 24H et stockage des données dans un fichier csv pour les 1800 points
 
 # Dimension matrice de température
 L = 1800  # nombre de points
@@ -104,7 +92,7 @@ y_flat = y.flatten()
 z_flat = z.flatten()
 
 #pour le mois de janvier
-for i in range (1,201) :
+for i in range (1,601) :
 
     P, T = calc_power_temp(i, 1, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes)
 
