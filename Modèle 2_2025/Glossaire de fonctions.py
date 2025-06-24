@@ -5,6 +5,10 @@ from matplotlib import cm
 from fonctions_modifie2 import update_sun_vector, project_to_sphere, get_shape, get_albedo, calc_power_temp, update_plot, slider_update, set_mois, temp_dans_csv, puissance_cond, change_temp, get_Cp
 
 
+
+
+#Surface
+
 def P_abs_surf_solar(time, mois, sun_vector, x, y, z, phi, theta, constante_solaire, sigma, rayon_astre_m, list_albedo, latitudes, longitudes):
     """
     Calcule la puissance solaire reçue et la température en fonction de l'heure et du mois.
@@ -17,7 +21,7 @@ def P_abs_surf_solar(time, mois, sun_vector, x, y, z, phi, theta, constante_sola
     phi, theta (numpy.ndarray): Coordonnées angulaires de la grille sphérique.
     constante_solaire (float): Constante solaire (W/m^2).
     sigma (float): Constante de Stefan-Boltzmann (W/m^2/K^4).
-    rayon_astre_m (float): Rayon de l'astre en mètres.
+    rayon_astre_ m (float): Rayon de l'astre en mètres.
     list_albedo (list): Grilles d'albédo pour chaque mois.
     latitudes, longitudes (numpy.ndarray): Latitudes et longitudes des données d'albédo.
 
@@ -67,8 +71,8 @@ def P_abs_surf_solar(time, mois, sun_vector, x, y, z, phi, theta, constante_sola
     return puissance_recue, temperature
 
 
-# Prise en compte de la diffusion radiale
-def P_em_conduction(T_surf,temps,lat,long):
+# Diffusion
+def P_em_diffusion(T_surf,temps,lat,long):
     """
     Calcule la puissance surfacique moyenne reçue à la surface pendant un temps choisie (normalement 1h),
     pour une température de surface T_surf. L’état thermique interne est mémorisé
@@ -102,10 +106,10 @@ def P_em_conduction(T_surf,temps,lat,long):
     steps = int(np.ceil(temps / dt))
 
     # Récupération ou initialisation du profil
-    if not hasattr(P_em_conduction, "T_state"):
+    if not hasattr(P_em_diffusion, "T_state"):
         T = np.ones(N) * T_lim
     else:
-        T = P_em_conduction.T_state.copy()
+        T = P_em_diffusion.T_state.copy()
 
     # impose immédiatement les températures aux deux extrémités
     T[0], T[-1] = T_lim, T_surf
@@ -124,9 +128,39 @@ def P_em_conduction(T_surf,temps,lat,long):
         flux[n] = -k * (T[1] - T[0]) / dx
 
     # stockage de l'état final pour l'appel suivant
-    P_em_conduction.T_state = T.copy()
+    P_em_diffusion.T_state = T.copy()
 
     # puissance moyenne surfacique pendant l’heure
     puiss = flux.mean()
     return puiss
 
+# Atmosphere
+
+# #Ajout de l'effet de serre (dans P_abs_surf_solar)
+#
+#     # Température constante de l'atmosphère (pour l'instant)
+#     T_atmo = 288 # Kelvin
+#     puissance_effet_serre = (sigma*T_atmo** 4)
+#
+#     # Puissance totale reçue
+#     puissance_recue += puissance_effet_serre
+#
+#     temperature = (puissance_recue / sigma) ** 0.25
+#
+#     return puissance_recue, temperature
+
+def P_abs_atm_solar(lat: float, long: float, t: float, Pinc: float):
+    AbsAtmo = 0.22
+    return 0
+
+
+def P_abs_atm_thermal(lat: float, long: float, t: float, T: float):
+    return 0
+
+
+def P_em_atm_thermal_up(lat: float, long: float, t: float):
+    return 0
+
+
+def P_em_atm_thermal_down(lat: float, long: float, t: float):
+    return 0
