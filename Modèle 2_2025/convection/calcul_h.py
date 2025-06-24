@@ -8,8 +8,13 @@ def calcul_h(T_sol, T_air) :
     lam = 0.026 # en W / (m.K), la conductivité thermique de l'air
     Lc = 0.05 # en m, la longueur caractéristique correspondant à notre situation
 
-    C = 0.54
+
     n = 1/4
+    if T_sol >= T_air :
+        C = 0.54
+    else :
+        C = 0.27
+
 
     g = 9.81 # en m / s**2, la constante de gravité
     nu = 1.5e-5 # en m**2 / s, viscosité cinématique de l'air
@@ -22,7 +27,7 @@ def calcul_h(T_sol, T_air) :
 
     Ra = Gr * Pr # nombre de Rayleigh
 
-    Nu = C * Ra**n
+    Nu = C * abs(Ra)**(1/4)
 
     h = Nu * lam / Lc # par def du nombre de Nusselt
 
@@ -31,6 +36,6 @@ def calcul_h(T_sol, T_air) :
 
 
 #exemple d'utilisation de la fonction
-T_sol = 300
-T_air = 290
+T_sol = 290
+T_air = 300
 calcul_h(T_sol, T_air)
