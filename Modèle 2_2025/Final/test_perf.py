@@ -122,4 +122,4 @@ if __name__ == "__main__":
             temperature_matrix[:, h - 1] = T_flat
 
     # Sauvegarde CSV
-    np.savetxt("temperature_600.csv", temperature_matrix, delimiter=",")
+    np.savetxt("temperature_600_janvier.csv", temperature_matrix, delimiter=",")
