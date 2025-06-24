@@ -2,7 +2,9 @@ import numpy as np
 import shapefile
 import matplotlib.pyplot as plt
 from matplotlib import cm
-from fonctions_modifie2 import update_sun_vector, project_to_sphere, get_shape, get_albedo, calc_power_temp, update_plot, slider_update, set_mois, temp_dans_csv, puissance_cond, change_temp, get_Cp
+from fonctions_modifie2 import update_sun_vector, project_to_sphere, get_shape, get_albedo, P_abs_surf_solar, update_plot, slider_update, set_mois, temp_dans_csv, P_em_diffusion, change_temp, get_Cp
+
+##/!\ Toutes les fonction qui "return" ne sont que des valeurs moyennes cste et ne sont pas ##incorporé dans le programe principake
 
 
 
@@ -21,7 +23,7 @@ def P_abs_surf_solar(time, mois, sun_vector, x, y, z, phi, theta, constante_sola
     phi, theta (numpy.ndarray): Coordonnées angulaires de la grille sphérique.
     constante_solaire (float): Constante solaire (W/m^2).
     sigma (float): Constante de Stefan-Boltzmann (W/m^2/K^4).
-    rayon_astre_ m (float): Rayon de l'astre en mètres.
+    rayon_astre_m (float): Rayon de l'astre en mètres.
     list_albedo (list): Grilles d'albédo pour chaque mois.
     latitudes, longitudes (numpy.ndarray): Latitudes et longitudes des données d'albédo.
 
@@ -47,7 +49,7 @@ def P_abs_surf_solar(time, mois, sun_vector, x, y, z, phi, theta, constante_sola
     albedo_grid_mapped = np.zeros_like(x)
     for i in range(x.shape[0]):
         for j in range(x.shape[1]):
-            lon   , lat = np.degrees(phi[i, j]), 90 - np.degrees(theta[i, j])
+            lon, lat = np.degrees(phi[i, j]), 90 - np.degrees(theta[i, j])
             if lon > 180:
                 lon -= 360
             albedo_grid_mapped[i, j] = get_albedo(lat, lon, mois, list_albedo, latitudes, longitudes)
@@ -57,7 +59,7 @@ def P_abs_surf_solar(time, mois, sun_vector, x, y, z, phi, theta, constante_sola
     # Puissance solaire + albédo
     puissance_recue = constante_solaire * cos_theta_incidence * (1 - coef_reflexion)
 
-#Ajout de l'effet de serre
+  # # #Ajout de l'effet de serre
 
     # Température constante de l'atmosphère (pour l'instant)
     T_atmo = 288 # Kelvin
@@ -70,19 +72,18 @@ def P_abs_surf_solar(time, mois, sun_vector, x, y, z, phi, theta, constante_sola
 
     return puissance_recue, temperature
 
-
 ##Surface
 
 # Surface
 
 def P_em_diffusion(T_surf,temps,lat,long):
-    """
+c    """
     Calcule la puissance surfacique moyenne reçue à la surface pendant un temps choisie (normalement 1h),
     pour une température de surface T_surf. L’état thermique interne est mémorisé
     d’un appel à l’autre pour garantir la continuité.
 
     Paramètre :
-      - T_surf : température imposée à la surface (K)
+      -T_surf: température imposée à la surface (K)
       -temps: durée de diffusion
       -long:longitude
       -lat:latitude
@@ -95,14 +96,8 @@ def P_em_diffusion(T_surf,temps,lat,long):
     L       = 10.0       # m, profondeur où la temperature est stable
     k       = 0.75       # conductivité
 
-    #cette partie devra etre réutilisé en prennant en compte que le coeff de diffusion change en fonction de la position
-    #c=capacité(long,lat) #capacité
-    #v= (510e6*0.05)/1800    #volume du decopoupage
-    #D=(v*k)/c  # coeff de diffusion
-
     D=5e-5     # coeff de diffusion provisoire
     T_lim = 288      # température en profondeur (K), provisoire aussi car elle change en fonction de la postion , /!\ cette temperature est pour 10m (environ temperature moyenne anuelle de surface)
-
 
     dx   = L / (N - 1)
     dt   = 0.25 * dx**2 / D
