@@ -1,7 +1,16 @@
 ## Final
 
-**`modèle_dynamique_test_1.py`** : 
+- Les codes principaux  : l'ensemble des fonctions, le code permettant la création des csv pour chaque mois et celui permettant l'affichage 3D de la Terre
+- Les différentes données : cartographie des contienents, albédo et températures pour chaque mois
 
-**`modèle_dynamique_test_2.py`** : 
+## Capacité thermique
 
-**`modèle_dynamique_test_3.py`** : 
+- Fonctions pour déterminer la capacité thermique en chaque point et fichier utilisé dans les codes principaux
+
+## Convection
+
+- Différents codes et tests
+
+## Diffusion
+
+- Codes de diffusion pour la température ou la puissance (radial et orthoradiale)
