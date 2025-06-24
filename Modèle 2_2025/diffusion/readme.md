@@ -15,3 +15,5 @@ conduction_radiale.py: Calcule la puissance surfacique moyenne reçue à la surf
 **`bilan_cond_radiale2.0.py`** : Version améliorée de bilan_cond_radiale1.0.py
 
 **`diffusionpuissancefinal.py`**: Utilise la température de surface horaire pour simuler la diffusion thermique en profondeur et tracer l'évolution horaire de la puissance moyenne reçue. Fichier dont on a augmenté la portabilité et que les autres groupes utiliseront par la suite.
+
+**`bilan....py`**
