@@ -2,7 +2,7 @@
 
 Ce programme permet de calculer le gradient de température selon l'axe (Ox), on considère que les composantes sur (Oy) et (Oz) sont nulles.
 Ici on considère l'axe (Oy) le long de l'axe de rotation de la Terre et l'axe (Ox) le long de l'équateur.
-On le calcule pour une latitude de 0 (+ ou - 3.1°) et une longitude allant de lon_min à lon_max, pour une heure H.
+On le calcule pour une latitude de lat_choisie (+ ou - 3.2°) et une longitude allant de -90° à 90°, pour une heure H.
 
 
 """
@@ -22,7 +22,7 @@ def gradient_temperature_x(fichier, H, lat_choisie) :
 
     # Génération des grilles latitude / longitude
     latitudes = np.linspace(-90, 90, 30)         # 30 latitudes
-    longitudes = np.linspace(0, 180, 60)         # 60 longitudes
+    longitudes = np.linspace(-180, 180, 60)         # 60 longitudes
 
     # Construction de la grille complète
     lat_all, lon_all = np.meshgrid(latitudes, longitudes, indexing='ij')  # matrices 2D (30, 60)
