@@ -1,5 +1,3 @@
-
-
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -9,7 +7,6 @@ import shapefile
 import pandas as pd
 from fonctions_modifie2 import update_sun_vector, project_to_sphere, get_shape, get_albedo, calc_power_temp, update_plot, slider_update, set_mois, temp_dans_csv, puissance_cond, change_temp, get_Cp
 import csv
-
 
 # Charger les données SHP
 sf = shapefile.Reader("data/ne_10m_coastline.shp")
@@ -79,28 +76,31 @@ current_month = [1]
 
 for i in mois_labels :
 
+    # Nom de variable qui change pour chaque mois
     var_name = f"temp_{i}"
-    #lecture de janvier par défaut
+
     T_sur_24h = []
     rows, cols = 30, 60
+
     # Lecture du CSV complet
     data = np.loadtxt(f"12_mois/{i}.csv", delimiter=",")
 
     # Extraction de la colonne voulue (1800 valeurs)
-    col_data = data[:, 0]  # shape = (1800,)
+    col_data = data[:, 0]
 
-    # Reshape en 30 x 60 (ordre par lignes = C-order, comme flatten())
+    # Reshape en 30 x 60
     T_reconstruit = col_data.reshape((rows, cols))
 
+    # Lecture des valeurs de température sur les 24h
     for k in range(1,25):
         col_data = data[:,k-1]
         T_reconstruit = col_data.reshape((rows, cols))
         T_sur_24h.append(T_reconstruit)
 
-
+    # création d'une variable par mois
     globals()[var_name] = np.array(T_sur_24h)
-    print(temp_Janvier)
 
+# Liste de toutes les températures
 tous_fichiers = [temp_Janvier,temp_Février,temp_Mars,temp_Avril,temp_Mai,temp_Juin,temp_Juillet,temp_Août,temp_Septembre,temp_Octobre,temp_Novembre,temp_Décembre]
 
 

@@ -182,8 +182,17 @@ def calc_power_temp(time, mois, sun_vector, x, y, z, phi, theta, constante_solai
 
 
 
-# Fonction calculant T1 en fonction de T0
 def change_temp (Ti, Cp, Pr, dt, sigma,S_terre) :
+    """
+    Calcule de la température grâce au premier principe thermodynamique (T1 en fonction de T0)
+
+    Paramètres:
+    - Ti : Température précédente (à t0)
+    - Cp : Capcité thermique
+    - Pr : Puissance reçue à t1
+    - S_terre : Surface de la Terre
+
+    """
     T = ((-sigma*(Ti**4)+Pr)*S_terre/1800*dt)/Cp + Ti
     return T
 
@@ -191,6 +200,12 @@ def change_temp (Ti, Cp, Pr, dt, sigma,S_terre) :
 
 def temp_dans_csv (temp,x,y,z,ax,shapes,mappable,cbar ):
     """
+    A partir de la lecture des csv, affichage des températures sur la Terre
+
+    Paramètres :
+    - temp : températures pour les 1800 surfaces au mois et à l'heure considérés
+    - x,y,z : les coordonnées cartésiennes du point considéré
+
     """
 
     ax.clear()
@@ -199,7 +214,7 @@ def temp_dans_csv (temp,x,y,z,ax,shapes,mappable,cbar ):
     colors = plt.cm.viridis((temp - np.min(temp)) / (np.max(temp) - np.min(temp)))
     ax.plot_surface(x, y, z, facecolors=colors, rstride=1, cstride=1, linewidth=0, antialiased=False, shade=False)
 
-
+    # Trace les continents sur la sphère
     for shape in shapes:
         result = get_shape(shape)
         if result is not None:  # Vérifiez si get_shape a retourné des coordonnées valides
@@ -229,9 +244,7 @@ def update_plot(time, mois, ax, fig, shapes, x, y, z, constante_solaire, sigma, 
             x_coast, y_coast, z_coast = result
             ax.plot(x_coast, y_coast, z_coast, color='black', zorder=5)
 
-    # surf = ax.plot_surface(x, y, z, facecolors=plt.cm.viridis(puissance_recue / np.max(puissance_recue)), rstride=1, cstride=1, linewidth=1)
 
-    # (temperature/np.max(temperature)) pour avoir des valeurs entre 0 et 1
     surf = ax.plot_surface(x, y, z, facecolors=plt.cm.viridis(temperature/np.max(temperature)), rstride=1, cstride=1, linewidth=1)
 
     ax.set_xlabel('X (m)')
@@ -248,7 +261,7 @@ def slider_update(val, current_month, tous_fichiers, ax, fig, shapes, x, y, z, c
     """
     valeur_temp = tous_fichiers[current_month[0]-1][val-1]
     temp_dans_csv (valeur_temp,x,y,z,ax,shapes,mappable,cbar )
-    # update_plot(val, current_month[0], ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes)
+
 
 def set_mois(mois, current_month,tous_fichiers, time_slider, ax, fig, shapes, x, y, z, constante_solaire, sigma, phi, theta, rayon_astre_m, list_albedo, latitudes, longitudes,mappable,cbar):
     """
@@ -289,14 +302,8 @@ def puissance_cond(T_surf,temps,lat,long):
     L       = 10.0       # m, profondeur où la temperature est stable
     k       = 0.75       # conductivité
 
-    #cette partie devra etre réutilisé en prennant en compte que le coeff de diffusion change en fonction de la position
-    #c=capacité(long,lat) #capacité
-    #v= (510e6*0.05)/1800    #volume du decopoupage
-    #D=(v*k)/c  # coeff de diffusion
-
     D=5e-5     # coeff de diffusion provisoire
     T_lim = 288      # température en profondeur (K), provisoire aussi car elle change en fonction de la postion , /!\ cette temperature est pour 10m (environ temperature moyenne anuelle de surface)
-
 
     dx   = L / (N - 1)
     dt   = 0.25 * dx**2 / D
